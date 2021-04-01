@@ -1,6 +1,6 @@
-# MSiA423 Template Repository
-# Ben Hakimi
-# QA: Stephen Gill
+# MSiA423 Project (Title TBD)
+## Ben Hakimi
+## QA: Stephen Gill
 
 <!-- toc -->
 
