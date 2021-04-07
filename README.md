@@ -3,7 +3,7 @@
 
 <!-- toc -->
 
-- [Project charter](#project-charter)
+- [Project Charter](#project-charter)
 - [Directory structure](#directory-structure)
 - [Running the app](#running-the-app)
   * [1. Initialize the database](#1-initialize-the-database)
