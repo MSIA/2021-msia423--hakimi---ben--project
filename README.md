@@ -4,6 +4,9 @@
 <!-- toc -->
 
 - [Project Charter](#project-charter)
+  * [Vision](#vision)
+  * [Mission](#mission)
+  * [Success Criteria ](#success-criteria)
 - [Directory structure](#directory-structure)
 - [Running the app](#running-the-app)
   * [1. Initialize the database](#1-initialize-the-database)
