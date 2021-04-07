@@ -1,6 +1,5 @@
 # NFL Spread Gambling App
-## Ben Hakimi
-## QA: Stephen Gill
+## Ben Hakimi (QA: Stephen Gill)
 
 <!-- toc -->
 
