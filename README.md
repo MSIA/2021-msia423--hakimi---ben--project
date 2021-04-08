@@ -24,14 +24,14 @@
 
 <!-- tocstop -->
 
-## Project Charter
+## Project charter
 ### Vision
 Over the past few decades, football has overtaken baseball as the number one sport in the United States and over that same time, sports gambling has increased in popularity. With the ease of online gambling, along with many states relaxing their gambling policies, gambling on NFL games is on pace to be the highests it's ever been and is showing no signs of slowing down. Many gamblers will bet on an NFL game's money line (simply betting which team will win), but another popular form of gambling is betting against the spread. When betting against the spread, betters not only have to factor in who will win a game but what the margin of victory will be. This extra is designed to make betting against the spread essentially a 50/50 proposition. This application hopes to turn that 50/50 proposition into something slightly more predictable and give users extra information when making gambling decisions.
 
 ### Mission
 This application will have users input the home team, visiting team, and points spread for a game they wish to bet on. The application will then use use team information such as defensive and offensive efficiency, as well as current trends in the past few games to detrmine which team will cover the spread in the selected game. Spread data is provided by www.sportsbookreviewsonline.com and team data will be taken from www.pro-football-reference.com.
 
-### Success Criteria 
+### Success criteria 
 In the training/testing phase of app development, correct classification rate will be the metric used to test the application's performance. In this situation, the correct classification rate will be the proportion of the time the application corectly predicts which team will cover the spread. Because "the house always wins" in gambling, having a correct classification rate above 50% will not be enough to make money for a user. Typically, a bet against the spread has odds of -110, meaning you must risk $110 in order to win $100. This means that to make money betting against the spread, a gambler will need to be right at least 52.4% of the time. To account for this gap, the metric used to determine the app's business value will be the expect money earned for every $100 risked.
 
 ## Directory structure 
