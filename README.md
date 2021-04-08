@@ -3,10 +3,10 @@
 
 <!-- toc -->
 
-- [Project Charter](#project-charter)
+- [Project charter](#project-charter)
   * [Vision](#vision)
   * [Mission](#mission)
-  * [Success Criteria ](#success-criteria)
+  * [Success criteria ](#success-criteria)
 - [Directory structure](#directory-structure)
 - [Running the app](#running-the-app)
   * [1. Initialize the database](#1-initialize-the-database)
