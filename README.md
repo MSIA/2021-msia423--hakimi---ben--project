@@ -34,6 +34,7 @@ This application will have users input the home team, visiting team, and points 
 ### Success criteria 
 In the training/testing phase of app development, correct classification rate will be the metric used to test the model's performance. In this situation, the correct classification rate will be the proportion of the time the application corectly predicts which team will cover the spread. Because "the house always wins" in gambling, having a correct classification rate above 50% will not be enough to make money for a user. Typically, a bet against the spread has odds of -105, meaning you must risk $105 in order to win $100. This means that to make money betting against the spread, a gambler will need to be right at least 51.2% of the time. To account for this gap, the metric used to determine the app's business value will be observed money earned for every $100 risked in cross-validation.
 
+
 ## Directory structure 
 
 ```
