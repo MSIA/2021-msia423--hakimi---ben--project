@@ -39,7 +39,7 @@ class Games(Base):
 		return '<Games %r>' % self.title
 
 
-def createDB(engine_string):
+def createDB():
     # set up mysql connection
     engine = sql.create_engine(engine_string)
 
@@ -49,3 +49,5 @@ def createDB(engine_string):
 # set up looging config
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 logger = logging.getLogger(__file__)
+
+createDB()
