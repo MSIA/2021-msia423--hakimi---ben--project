@@ -94,12 +94,12 @@ export AWS_SECRET_ACCESS_KEY="MY_SECRET_ACCESS_KEY"
 
 #### Build the Docker image
 
-`docker build -t pitchfork .`
+`docker build -f app/Dockerfile -t nflgames .`
 
 #### Download raw data and upload to S3
 
 ```bash
-docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY pitchfork src/load_data.py
+docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadData
 ```
 
 By default, this will download the original data to `data/raw/P4KxSpotify.csv` and then upload into the S3 bucket `s3://2021-msia423-rice-brian/raw/P4KxSpotify.csv`. Alternative paths can be configured with `--local_path` or `--s3path`. Instead of uploading to S3, you may download from S3 by including the flag `--download`. Finally, `pandas` may be used to read the data by including `--pandas` (and optionally `--sep <VALUE>`).
