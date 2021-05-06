@@ -118,8 +118,6 @@ export MYSQL_DATABASE="MY_DATABASE"
 
 #### Create Database
 
-To create the database in the location configured in `config.py` run:
-
 `docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE nflgames run.py createDB`
 
 By default, `python run.py createDB` creates a database at `sqlite:///data/msia423_db.db`.
