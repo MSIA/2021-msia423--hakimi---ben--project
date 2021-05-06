@@ -3,10 +3,27 @@ import numpy as np
 
 def downloadSource(inputPath1, inputPath2, outputPath):
 
+    """
+    Downloads the xlxs file from sportsbookreviewonline.com
+
+    Args:
+        inputPath1: (String), Required, first half of data link 
+        inputPath2: (String), Required, second half of data link
+        outputPath: (String), Required, name of the finished data file once retrieved
+
+    Returns:
+        csv file
+
+    """
+
     url_part1 = inputPath1 # "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20"
     url_part2 = inputPath2 #".xlsx"
 
     def loaddata(n):
+
+        """
+        Creates proper year string to add to path to download the data
+        """
     
         year1 = n
         year2 = n+1
