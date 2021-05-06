@@ -83,16 +83,16 @@ In the training/testing phase of app development, correct classification rate wi
 
 ### 1. Load data into S3
 
-#### Configure S3 credentials
+#### Source S3 Credentials
 
-Interacting with S3 requires your credentials to be loaded as environment variables:
+Make sure the following AWS/S3 credentials have been loaded as environment variables:
 
 ```bash
 export AWS_ACCESS_KEY_ID="MY_ACCESS_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="MY_SECRET_ACCESS_KEY"
 ```
 
-#### Build the Docker image
+#### Build Docker Image
 
 `docker build -f app/Dockerfile -t nflgames .`
 
@@ -104,9 +104,9 @@ docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadDat
 
 By default, this will download the original data to `data/raw/P4KxSpotify.csv` and then upload into the S3 bucket `s3://2021-msia423-rice-brian/raw/P4KxSpotify.csv`. Alternative paths can be configured with `--local_path` or `--s3path`. Instead of uploading to S3, you may download from S3 by including the flag `--download`. Finally, `pandas` may be used to read the data by including `--pandas` (and optionally `--sep <VALUE>`).
 
-### 2. Initialize the database
+### 2. Initialize Database
 
-#### Configure environment variables
+#### Source RDS/mysql variables
 
 ```bash
 export MYSQL_USER="MY_USERNAME"
@@ -116,13 +116,13 @@ export MYSQL_PORT="MY_PORT"
 export MYSQL_DATABASE="MY_DATABASE"
 ```
 
-#### Create the database
+#### Create Database
 
 To create the database in the location configured in `config.py` run:
 
-`docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE pitchfork run.py create_db`
+`docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE nflgames run.py createDB`
 
-By default, `python run.py create_db` creates a database at `sqlite:///data/msia423_db.db`.
+By default, `python run.py createDB` creates a database at `sqlite:///data/msia423_db.db`.
 
 ##### Local SQLite database
 
