@@ -1,5 +1,4 @@
 export MYSQL_USER="admin"
 export MYSQL_PASSWORD="Cubbies#21"
-export MYSQL_HOST="nw-msia423-bjh6390.ct8z0uxoe18p.us-east-1.rds.amazonaws.com"
 export MYSQL_PORT="3306"
 export DATABASE_NAME="msia423_db"

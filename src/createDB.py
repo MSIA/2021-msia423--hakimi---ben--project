@@ -28,7 +28,7 @@ def createDB(engine_string):
     """
 	class Games(Base):
 		"""Create a data model for the database to be set up for capturing songs """
-		__tablename__ = 'GamesCheckDocker'
+		__tablename__ = 'Games'
 		id = Column(Integer, primary_key=True)
 		index = Column(Integer, unique=False, nullable=False)
 		date = Column(Integer, unique=False, nullable=False)
