@@ -102,6 +102,8 @@ export AWS_SECRET_ACCESS_KEY="MY_SECRET_ACCESS_KEY"
 docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadData
 ```
 
+If no optional inputs are specified for the run.py function, the data the original data will be pulled from the internet and placed in the local path `data/data.csv`. It will then be uploaded to the the S3 bucket `s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv`. 
+
 By default, this will download the original data to `data/raw/P4KxSpotify.csv` and then upload into the S3 bucket `s3://2021-msia423-rice-brian/raw/P4KxSpotify.csv`. Alternative paths can be configured with `--local_path` or `--s3path`. Instead of uploading to S3, you may download from S3 by including the flag `--download`. Finally, `pandas` may be used to read the data by including `--pandas` (and optionally `--sep <VALUE>`).
 
 ### 2. Initialize Database
