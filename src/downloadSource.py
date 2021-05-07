@@ -1,5 +1,12 @@
 import pandas as pd
 import numpy as np
+import logging
+
+logging.basicConfig(
+    format="%(asctime)s %(levelname)-8s %(message)s", level=logging.DEBUG
+)
+
+logger = logging.getLogger(__name__)
 
 def downloadSource(inputPath1, inputPath2, outputPath):
 
@@ -16,38 +23,44 @@ def downloadSource(inputPath1, inputPath2, outputPath):
 
     """
 
-    url_part1 = inputPath1 # "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20"
-    url_part2 = inputPath2 #".xlsx"
+    try:
+        url_part1 = inputPath1 # "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20"
+        url_part2 = inputPath2 #".xlsx"
 
-    def loaddata(n):
+        def loaddata(n):
 
-        """ Creates proper year string to add to path to download the data """
-    
-        year1 = n
-        year2 = n+1
-    
-        if (n<9):
-            year1Str = '200'+str(year1)
-            year2Str = '0'+str(year2)
-        elif (n==9):
-            year1Str = '200'+str(year1)
-            year2Str = str(year2)
-        else:
-            year1Str = '20'+str(year1)
-            year2Str = str(year2)
+            """ Creates proper year string to add to path to download the data """
         
-        url = url_part1+year1Str+'-'+year2Str+url_part2
-        yearData = pd.read_excel(url)
-    
-        yearData['year']=int(year1Str)
-    
-        return yearData
+            year1 = n
+            year2 = n+1
+        
+            if (n<9):
+                year1Str = '200'+str(year1)
+                year2Str = '0'+str(year2)
+            elif (n==9):
+                year1Str = '200'+str(year1)
+                year2Str = str(year2)
+            else:
+                year1Str = '20'+str(year1)
+                year2Str = str(year2)
+            
+            url = url_part1+year1Str+'-'+year2Str+url_part2
+            yearData = pd.read_excel(url)
+        
+            yearData['year']=int(year1Str)
+        
+            return yearData
 
-    df_ls = [loaddata(i) for i in range(7,21)]
-    df_full = pd.concat(df_ls)
-    df_full
+        df_ls = [loaddata(i) for i in range(7,21)]
+        df_full = pd.concat(df_ls)
+        df_full
 
-    df_full.to_csv(outputPath, encoding='utf-8', index=False)
+        df_full.to_csv(outputPath, encoding='utf-8', index=False)
+
+        logger.info("xlsx document %s%s succesfully downloaded from source", inputPath1, inputPath2)
+
+    except:
+        logger.error("Failed to download xlsx document %s%s, please check inputs", inputPath1, inputPath2)
 
 
 

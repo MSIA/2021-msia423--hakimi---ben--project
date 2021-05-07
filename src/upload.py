@@ -1,4 +1,17 @@
 import boto3  
+import logging
+
+logging.getLogger("boto3").setLevel(logging.ERROR)
+logging.getLogger("botocore").setLevel(logging.ERROR)
+logging.getLogger("s3fs").setLevel(logging.ERROR)
+logging.getLogger("s3transfer").setLevel(logging.ERROR)
+logging.getLogger("urllib3").setLevel(logging.ERROR)
+
+logging.basicConfig(
+    format="%(asctime)s %(levelname)-8s %(message)s", level=logging.DEBUG
+)
+
+logger = logging.getLogger(__name__)
 
 def upload(bucket, s3path, fileName):
 
@@ -14,8 +27,12 @@ def upload(bucket, s3path, fileName):
         csv file
 
     """
-    
-    
-    s3 = boto3.resource("s3")
-    bucket = s3.Bucket(bucket)
-    bucket.upload_file(s3path, fileName)
+    try:    
+        s3 = boto3.resource("s3")
+        bucket = s3.Bucket(bucket)
+        bucket.upload_file(s3path, fileName)
+
+        logger.info("Data uploaded to S3 bucket w/ path: s3://%s/%s", bucket, s3path)
+
+    except:
+        logger.error("Unable to load local data to S3 bucket: s3://%s/%s Please check inputs and AWS Credentials", bucket, s3path)
