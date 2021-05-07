@@ -96,7 +96,9 @@ export AWS_SECRET_ACCESS_KEY="MY_SECRET_ACCESS_KEY"
 
 Run the following command in the command line to build the Docker Image:
 
-`docker build -f app/Dockerfile -t nflgames .`
+```bash
+docker build -f app/Dockerfile -t nflgames .
+```
 
 #### Download raw data and upload to S3
 
@@ -126,7 +128,9 @@ export MYSQL_DATABASE="MY_DATABASE"
 
 To create a database using the Docker Image, run the following in the command line:
 
-`docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE -e SQLALCHEMY_DATABASE_URI nflgames run.py createDB`
+```bash
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE -e SQLALCHEMY_DATABASE_URI nflgames run.py createDB
+```
 
 To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` and use it as an import to the above docker command. If no `SQLALCHEMY_DATABASE_URI` is input, the default will be `sqlite:///data/msia423_db.db`.
 
