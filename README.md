@@ -118,9 +118,9 @@ export MYSQL_DATABASE="MY_DATABASE"
 
 #### Create Database
 
-`docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE nflgames run.py createDB`
+`docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE -e SQLALCHEMY_DATABASE_URI nflgames run.py createDB`
 
-By default, `python run.py createDB` creates a database at `sqlite:///data/msia423_db.db`.
+To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` and use it as an import to the above docker command. If no `SQLALCHEMY_DATABASE_URI` is input, the default will be `sqlite:///data/msia423_db.db`.
 
 ##### Local SQLite database
 
@@ -128,7 +128,5 @@ A local SQLite database can be created for development and local testing. It doe
 
 `engine_string = 'sqlite:///data/msia423_db.db'`
 
-##### RDS instance
 
-Specify your environment variables according to your own RDS instance username and password, host (endpoint), port, and database name.
  
