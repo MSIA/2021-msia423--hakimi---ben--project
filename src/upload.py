@@ -15,6 +15,7 @@ def upload(bucket, s3path, fileName):
 
     """
     
+    
     s3 = boto3.resource("s3")
     bucket = s3.Bucket(bucket)
     bucket.upload_file(s3path, fileName)
