@@ -12,14 +12,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# conn_type = "mysql+pymysql"
-# user = os.environ.get("MYSQL_USER")
-# password = os.environ.get("MYSQL_PASSWORD")
-# host = os.environ.get("MYSQL_HOST")
-# port = os.environ.get("MYSQL_PORT")
-# database = os.environ.get("DATABASE_NAME")
-# engine_string = "{}://{}:{}@{}:{}/{}".format(conn_type, user, password, host, port, database)
-
 def createDB(engine_string):
 	Base = declarative_base()
 
