@@ -6,10 +6,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, MetaData
 import logging
 
+## Configure and name logger
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s", level=logging.DEBUG
 )
-
 logger = logging.getLogger(__name__)
 
 # conn_type = "mysql+pymysql"
@@ -35,9 +35,10 @@ def createDB(engine_string):
     """
 
 	try:
+		## Table with induvidual game information
 		class Games(Base):
 			"""Create a data model for the database to be set up for capturing songs """
-			__tablename__ = 'Games'
+			__tablename__ = 'Games' ## Chose name of table
 			id = Column(Integer, primary_key=True)
 			index = Column(Integer, unique=False, nullable=False)
 			date = Column(Integer, unique=False, nullable=False)
@@ -62,7 +63,7 @@ def createDB(engine_string):
 		# set up mysql connection
 		engine = sql.create_engine(engine_string)
 
-		# create the tracks table
+		# create the Games table
 		Base.metadata.create_all(engine)
 
 		logger.info("Database successfully created using ENGINE_STRING = %s", engine_string)

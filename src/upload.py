@@ -1,18 +1,20 @@
 import boto3  
 import logging
 
+## Change level of following loggers to avoid over-use
 logging.getLogger("boto3").setLevel(logging.ERROR)
 logging.getLogger("botocore").setLevel(logging.ERROR)
 logging.getLogger("s3fs").setLevel(logging.ERROR)
 logging.getLogger("s3transfer").setLevel(logging.ERROR)
 logging.getLogger("urllib3").setLevel(logging.ERROR)
 
+## configure and name logger
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s", level=logging.DEBUG
 )
-
 logger = logging.getLogger(__name__)
 
+## function to be called in run.py
 def upload(bucket, s3path, fileName):
 
     """

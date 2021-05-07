@@ -2,10 +2,10 @@ import pandas as pd
 import numpy as np
 import logging
 
+## Configure and name logger
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s", level=logging.DEBUG
 )
-
 logger = logging.getLogger(__name__)
 
 def downloadSource(inputPath1, inputPath2, outputPath):
@@ -27,13 +27,15 @@ def downloadSource(inputPath1, inputPath2, outputPath):
         url_part1 = inputPath1 # "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20"
         url_part2 = inputPath2 #".xlsx"
 
+        ## function creates the full url string with year information and gets that data
         def loaddata(n):
 
             """ Creates proper year string to add to path to download the data """
         
             year1 = n
             year2 = n+1
-        
+
+            ## account for differences in year formats
             if (n<9):
                 year1Str = '200'+str(year1)
                 year2Str = '0'+str(year2)
@@ -51,10 +53,12 @@ def downloadSource(inputPath1, inputPath2, outputPath):
         
             return yearData
 
+        ## get all data from 2007-2020
         df_ls = [loaddata(i) for i in range(7,21)]
         df_full = pd.concat(df_ls)
         df_full
 
+        ## output csv
         df_full.to_csv(outputPath, encoding='utf-8', index=False)
 
         logger.info("xlsx document %s%s succesfully downloaded from source", inputPath1, inputPath2)
