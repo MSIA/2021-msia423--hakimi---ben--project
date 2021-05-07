@@ -94,9 +94,13 @@ export AWS_SECRET_ACCESS_KEY="MY_SECRET_ACCESS_KEY"
 
 #### Build Docker Image
 
+Run the following command in the command line to build the Docker Image:
+
 `docker build -f app/Dockerfile -t nflgames .`
 
 #### Download raw data and upload to S3
+
+To download the raw data using the previously built Docker Image, run the following in the command line:
 
 ```bash
 docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadData 2021-msia423-hakimi-ben rawCSVUpload/raw.csv
@@ -108,6 +112,8 @@ If no optional inputs are specified for the run.py function, the data the origin
 
 #### Source RDS/mysql variables
 
+Make sure the following RDS/mysql credentials have been loaded as environment variables:
+
 ```bash
 export MYSQL_USER="MY_USERNAME"
 export MYSQL_PASSWORD="MY_PASSWORD"
@@ -117,6 +123,8 @@ export MYSQL_DATABASE="MY_DATABASE"
 ```
 
 #### Create Database
+
+To create a database using the Docker Image, run the following in the command line:
 
 `docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE -e SQLALCHEMY_DATABASE_URI nflgames run.py createDB`
 
