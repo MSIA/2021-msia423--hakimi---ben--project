@@ -21,9 +21,7 @@ def downloadSource(inputPath1, inputPath2, outputPath):
 
     def loaddata(n):
 
-        """
-        Creates proper year string to add to path to download the data
-        """
+        """ Creates proper year string to add to path to download the data """
     
         year1 = n
         year2 = n+1
