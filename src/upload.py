@@ -32,7 +32,7 @@ def upload(bucket, s3path, fileName):
         bucket = s3.Bucket(bucket)
         bucket.upload_file(s3path, fileName)
 
-        logger.info("Data uploaded to S3 bucket w/ path: s3://%s/%s", bucket, s3path)
+        logger.info("Data uploaded to S3 bucket w/ %s File Name= %s", bucket, s3path)
 
     except:
-        logger.error("Unable to load local data to S3 bucket: s3://%s/%s Please check inputs and AWS Credentials", bucket, s3path)
+        logger.error("Unable to load local data to S3 bucket w/ %s File Name= %s, Please check inputs and AWS Credentials", bucket, s3path)
