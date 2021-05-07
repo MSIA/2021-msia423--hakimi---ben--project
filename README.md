@@ -124,7 +124,7 @@ To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI
 
 ##### Local SQLite database
 
-A local SQLite database can be created for development and local testing. It does not require a username or password and replaces the host and port with the path to the database file:
+A local SQLite database can be created by not providing a `MYSQL_HOST` input and will create a database locally with the following engine string:
 
 `engine_string = 'sqlite:///data/msia423_db.db'`
 
