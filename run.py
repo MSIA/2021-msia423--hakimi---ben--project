@@ -23,10 +23,10 @@ if __name__ == '__main__':
     sb_datatos3 = subparser.add_parser("loadData", description = "Put data into S3 bucket")
     sb_datatos3.add_argument("BUCKETNAME", help="Name of S3 Bucket")
     sb_datatos3.add_argument("S3PATH", help="path to S3 Bucket")
-    sb_datatos3.add_argument("--FILEPATH", default = "data/data.csv", help="name of data to upload")
+    sb_datatos3.add_argument("--FILEPATH", default = "data/external/data.csv", help="name of data to upload")
     sb_datatos3.add_argument("--INPUT1",default = "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20", help="Begining part of path")
     sb_datatos3.add_argument("--INPUT2",default = ".xlsx", help="end of path")
-    sb_datatos3.add_argument("--OUTPUTPATH", default = "data/data.csv", help="name of output after download")
+    sb_datatos3.add_argument("--OUTPUTPATH", default = "data/external/data.csv", help="name of output after download")
 
     args = parser.parse_args()
     sp_used = args.subparser_name
