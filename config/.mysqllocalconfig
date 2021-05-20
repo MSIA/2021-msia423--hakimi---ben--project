@@ -1,4 +1,0 @@
-export MYSQL_USER="admin"
-export MYSQL_PASSWORD="Cubbies#21"
-export MYSQL_PORT="3306"
-export MYSQL_DATABASE="msia423_db"
