@@ -18,5 +18,6 @@ data/*
 !data/external/
 config/local
 .mysqlconfig
+.mysqllocalconfig
 .awsconfig
 !.gitkeep
