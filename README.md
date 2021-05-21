@@ -132,7 +132,7 @@ To create a database using the Docker Image, run the following in the command li
 docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE -e SQLALCHEMY_DATABASE_URI nflgames run.py createDB
 ```
 
-To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` and use it as an import to the above docker command. If no `SQLALCHEMY_DATABASE_URI` is input, the default will be `sqlite:///data/msia423_db.db`.
+To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` and use it as an import to the above docker command. If no `SQLALCHEMY_DATABASE_URI` or `MYSQL_DATABASE` are input, the default will be `sqlite:///data/msia423_db.db`.
 
 ##### Local SQLite database
 
