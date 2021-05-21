@@ -83,7 +83,7 @@ In the training/testing phase of app development, correct classification rate wi
 
 ### 1. Load data into S3
 
-#### Source S3 Credentials
+#### Set S3 Credential environmental variables
 
 Make sure the following AWS/S3 credentials have been loaded as environment variables:
 
