@@ -1,10 +1,9 @@
-import os
 import logging
+
 import sqlalchemy as sql
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base 
 from sqlalchemy import Column, Integer, String, MetaData
-import logging
 
 ## Configure and name logger
 logging.basicConfig(
@@ -62,5 +61,4 @@ def createDB(engine_string):
 
 	except:
 		logger.error("Failed to create database using ENGINE_STRING = %s, please check inputs and credentials", engine_string)
-
 
