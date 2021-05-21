@@ -108,7 +108,7 @@ To download the raw data using the previously built Docker Image, run the follow
 docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadData 2021-msia423-hakimi-ben rawCSVUpload/raw.csv
 ```
 
-If no optional inputs are specified for the run.py function, the data the original data will be pulled from the internet and placed in the local path `data/data.csv`. It will then be uploaded to the the S3 bucket `s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv`. To change the S3 bucket (the 2021-msia423-hakimi-ben part of the previous path), input the desired name of your S3 bucket in the first argument after `loadData`. To change the name of the file when uploaded to S3 (the rawCSVUpload/raw.csv part of the previous path), input the desired file path in the second argument after `loadData`.
+If no optional inputs are specified for the run.py function, the data will be pulled from the internet and placed in the local path `data/data.csv`. It will then be uploaded to the the S3 bucket `s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv`. To change the S3 bucket (the 2021-msia423-hakimi-ben part of the previous path), input the desired name of your S3 bucket in the first argument after `loadData`. To change the name of the file when uploaded to S3 (the rawCSVUpload/raw.csv part of the previous path), input the desired file path in the second argument after `loadData`.
 
 ### 2. Initialize Database
 
