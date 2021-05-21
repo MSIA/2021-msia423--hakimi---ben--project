@@ -16,7 +16,7 @@ def downloadSource(inputPath1, inputPath2, outputPath):
     Args:
         inputPath1: (String), Required, first half of data link 
         inputPath2: (String), Required, second half of data link
-        outputPath: (String), Required, name of the finished data file once retrieved
+        outputPath: (String), Required, name of the finished, local data path and file once data has been retrieved
 
     Returns:
         None
@@ -69,4 +69,3 @@ def downloadSource(inputPath1, inputPath2, outputPath):
 
 
     
-
