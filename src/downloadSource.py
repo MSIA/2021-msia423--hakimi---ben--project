@@ -19,7 +19,7 @@ def downloadSource(inputPath1, inputPath2, outputPath):
         outputPath: (String), Required, name of the finished data file once retrieved
 
     Returns:
-        csv file
+        None
 
     """
 
@@ -69,6 +69,5 @@ def downloadSource(inputPath1, inputPath2, outputPath):
 
 
     
-
 
 
