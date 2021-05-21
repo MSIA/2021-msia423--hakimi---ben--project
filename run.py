@@ -1,41 +1,40 @@
 import argparse
+# from pathlib import Path
 
 import logging.config
-logging.config.fileConfig('config/logging/local.conf')
-logger = logging.getLogger('penny-lane-pipeline')
 
-from src.add_songs import TrackManager, create_db
+logging.config.fileConfig('config/logging/local.conf')
+logger = logging.getLogger()
+
+from src.upload import upload
+from src.downloadSource import downloadSource
+from src.createDB import createDB
 from config.flaskconfig import SQLALCHEMY_DATABASE_URI
 
 if __name__ == '__main__':
 
-    # Add parsers for both creating a database and adding songs to it
-    parser = argparse.ArgumentParser(description="Create and/or add data to database")
-    subparsers = parser.add_subparsers(dest='subparser_name')
+    parser = argparse.ArgumentParser(description = "Scrape Data and upload data to S3/Create DB")
+    subparser = parser.add_subparsers(dest='subparser_name')
 
-    # Sub-parser for creating a database
-    sb_create = subparsers.add_parser("create_db", description="Create database")
-    sb_create.add_argument("--engine_string", default=SQLALCHEMY_DATABASE_URI,
+    sb_createdb = subparser.add_parser("createDB", description = "Create Database")
+    sb_createdb.add_argument("--engine_string", default=SQLALCHEMY_DATABASE_URI,
                            help="SQLAlchemy connection URI for database")
 
-    # Sub-parser for ingesting new data
-    sb_ingest = subparsers.add_parser("ingest", description="Add data to database")
-    sb_ingest.add_argument("--artist", default="Emancipator", help="Artist of song to be added")
-    sb_ingest.add_argument("--title", default="Minor Cause", help="Title of song to be added")
-    sb_ingest.add_argument("--album", default="Dusk to Dawn", help="Album of song being added")
-    sb_ingest.add_argument("--engine_string", default='sqlite:///data/tracks.db',
-                           help="SQLAlchemy connection URI for database")
+    sb_datatos3 = subparser.add_parser("loadData", description = "Put data into S3 bucket")
+    sb_datatos3.add_argument("BUCKETNAME", help="Name of S3 Bucket")
+    sb_datatos3.add_argument("S3PATH", help="path to S3 Bucket")
+    sb_datatos3.add_argument("--FILEPATH", default = "data/external/data.csv", help="name of data to upload")
+    sb_datatos3.add_argument("--INPUT1",default = "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20", help="Begining part of path")
+    sb_datatos3.add_argument("--INPUT2",default = ".xlsx", help="end of path")
+    sb_datatos3.add_argument("--OUTPUTPATH", default = "data/external/data.csv", help="path to data saved locally")
 
     args = parser.parse_args()
     sp_used = args.subparser_name
-    if sp_used == 'create_db':
-        create_db(args.engine_string)
-    elif sp_used == 'ingest':
-        tm = TrackManager(engine_string=args.engine_string)
-        tm.add_track(args.title, args.artist, args.album)
-        tm.close()
+
+    if sp_used == "createDB":
+        createDB(args.engine_string)
+    elif sp_used == "loadData":
+        downloadSource(args.INPUT1, args.INPUT2, args.OUTPUTPATH)
+        upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
     else:
         parser.print_help()
-
-
-
