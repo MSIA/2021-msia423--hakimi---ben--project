@@ -22,7 +22,7 @@ def upload(bucket, s3path, fileName):
 
     Args:
         bucket: (String), Required, name of S3 Bucket
-        s3Path: (String), Required, name to be used when saved to s3
+        s3Path: (String), Required, path to and name of file when saved in S3
         fileName: (String), Required, local file path data is being uploaded from
 
     Returns:
