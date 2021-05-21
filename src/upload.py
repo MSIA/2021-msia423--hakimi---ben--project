@@ -26,7 +26,7 @@ def upload(bucket, s3path, fileName):
         fileName: (String), Required, local file path
 
     Returns:
-        csv file
+        None
 
     """
     try:    
