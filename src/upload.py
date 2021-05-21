@@ -1,5 +1,6 @@
-import boto3  
 import logging
+
+import boto3  
 
 ## Change level of following loggers to avoid over-use
 logging.getLogger("boto3").setLevel(logging.ERROR)
