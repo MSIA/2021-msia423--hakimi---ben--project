@@ -4,7 +4,7 @@ import argparse
 import logging.config
 
 logging.config.fileConfig('config/logging/local.conf')
-logger = logging.getLogger('penny-lane-pipeline')
+logger = logging.getLogger()
 
 from src.upload import upload
 from src.downloadSource import downloadSource
@@ -38,4 +38,3 @@ if __name__ == '__main__':
         upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
     else:
         parser.print_help()
-
