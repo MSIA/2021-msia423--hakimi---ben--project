@@ -14,9 +14,9 @@ def createModel(features, target):
     return rf, X_test, y_test
 
 def scoreModel(rf, X_test, y_test):
-    ypred_proba_test = rf.predict_proba(X_test)[:,1]
+    # ypred_proba_test = rf.predict_proba(X_test)[:,1]
     ypred_bin_test = rf.predict(X_test)
-    auc = roc_auc_score(y_test, ypred_proba_test)
-    confusion = confusion_matrix(y_test, ypred_bin_test)
+    # auc = roc_auc_score(y_test, ypred_proba_test)
+    #confusion = confusion_matrix(y_test, ypred_bin_test)
     accuracy = accuracy_score(y_test, ypred_bin_test)
-    return auc, confusion, accuracy
+    return accuracy

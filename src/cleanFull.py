@@ -48,7 +48,7 @@ def fixNames(data, side):
             elif data['H_Team'][i]=="LosAngeles" or data['H_Team'][i]=="St.Louis":
                 data['H_Team'][i]="LARams"
             elif data['H_Team'][i]=="HoustonTexans":
-                data['H_Team'][i]="LasVegas"
+                data['H_Team'][i]="Houston"
             elif data['H_Team'][i]=="NewYork":
                 data['H_Team'][i]="NYGiants"
             elif data['H_Team'][i]=="Tampa":
@@ -72,12 +72,12 @@ def fixNames(data, side):
             elif data['V_Team'][i]=="LosAngeles" or data['V_Team'][i]=="St.Louis":
                 data['V_Team'][i]="LARams"
             elif data['V_Team'][i]=="HoustonTexans":
-                data['V_Team'][i]="LasVegas"
+                data['V_Team'][i]="Houston"
             i = i+1    
     return data
 
 def onHot(data):
-    useful = data[['V_Team', 'H_Team','homeSpread','Home_Cover','year']]
+    useful = data[['V_Team', 'H_Team','homeSpread','Home_Cover']]
     useful['V_Team'] = useful['V_Team'] + "V"
     oneHotV = pd.get_dummies(useful['V_Team'])
     useful = useful.drop('V_Team',axis = 1)
@@ -90,6 +90,5 @@ def onHot(data):
 def splitFeatures(data):
     target = data['Home_Cover']
     features = data.drop('Home_Cover',axis = 1)
-    features = features.drop('year',axis = 1)\
     
     return target, features

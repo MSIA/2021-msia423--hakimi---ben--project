@@ -22,6 +22,7 @@ class Games(Base):
 	"""Create a data model for the database to be set up for capturing songs """
 
 	__tablename__ = 'Games' ## Chose name of table
+	gameID = Column(String(100), primary_key=True)
 	homeTeam = Column(String(100), unique=False, nullable=False)
 	awayTeam = Column(String(100), unique=False, nullable=False)
 	line = Column(Integer, unique=False, nullable=False)
@@ -55,7 +56,7 @@ def createDB(engine_string):
 		logger.error("Failed to create database using ENGINE_STRING = %s, please check inputs and credentials", engine_string)
 
 
-class inputGames(Base):
+class inputGames():
 	def __init__(self, app=None, engine_string=None):
 		"""
 		Args:
@@ -91,9 +92,10 @@ class inputGames(Base):
 			logger.error("Unexpected error closing database session: %s", sys.exc_info())
 
 	def add_game(self,
+					game_id: str,
 					home_team: str,
 					away_team: str,
-					spread: int,) -> None:
+					spread: int) -> None:
 		"""Seeds an existing database with additional games.
 		Args:
 			home_full (str): Full name of the home team in the game in question
@@ -113,7 +115,8 @@ class inputGames(Base):
 		try:
 			# Initiate the sesion, add the game, commit the session, then close
 			session = self.session
-			game = Games(homeTeam=home_team,
+			game = Games(gameID=game_id,
+									homeTeam=home_team,
 									awayTeam=away_team,
 									line=spread)
 			session.add(game)

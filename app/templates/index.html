@@ -7,16 +7,16 @@
 
 <body>
     <h3>
-         <a href = "{{ url_for('index') }}">Penny Lane Music Recommender</a>
+         <a href = "{{ url_for('home_page') }}">Who will cover the spread?</a>
     </h3>
 
     <hr/>
     <table>
          <thead>
             <tr>
-               <th>Title</th>
-               <th>Artist</th>
-               <th>Album</th>
+               <th>Home Team___</th>
+               <th>Away Team___</th>
+               <th>Spread</th>
             </tr>
          </thead>
 
@@ -25,17 +25,17 @@
                <tr>
                    <td>{{ track.title }}</td>
                    <td>{{ track.artist }}</td>
-                   <td>{{ track.album }}</td>
+                   <td>{{ track.spread }}</td>
                </tr>
             {% endfor %}
          </tbody>
       </table>
-      <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <form action="{{ url_for('addThem') }}" method=post class=add-entry>
       <dl>
-        <input type=text size=15 name=title placeholder="Title">
-        <input type=text size=15 name=artist placeholder="Artist">
-        <input type=text size=15 name=album placeholder="Album">
-        <input type=submit value=Add>
+        <input type=text size=15 name=homeTeam placeholder="Home Team">
+        <input type=text size=15 name=awayTeam placeholder="Away Team">
+        <input type=text size=15 name=spread placeholder="Spread">
+        <input type=submit value=Submit>
       </dl>
     </form>
 
