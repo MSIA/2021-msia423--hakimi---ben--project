@@ -1,12 +1,13 @@
 import sys
 import logging
+
 import sqlalchemy as sql
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base 
 from sqlalchemy import Column, Integer, String, MetaData
+
 import logging
 from flask_sqlalchemy import SQLAlchemy
-
 
 ## Configure and name logger
 logging.basicConfig(
@@ -122,3 +123,4 @@ class inputGames(Base):
 			logger.debug("AttributeError occurred trying to add entry using a session that wasn't opened")
 		except:
 			logging.error("Unexpected error adding game in ingest: %s", sys.exc_info())
+

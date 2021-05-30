@@ -83,7 +83,7 @@ In the training/testing phase of app development, correct classification rate wi
 
 ### 1. Load data into S3
 
-#### Source S3 Credentials
+#### Set S3 Credential environmental variables
 
 Make sure the following AWS/S3 credentials have been loaded as environment variables:
 
@@ -105,10 +105,10 @@ docker build -f app/Dockerfile -t nflgames .
 To download the raw data using the previously built Docker Image, run the following in the command line:
 
 ```bash
-docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadData 2021-msia423-hakimi-ben rawCSVUpload/raw.csv
+docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadData <S3_BUCKET_NAME> <PATH_IN_S3>
 ```
 
-If no optional inputs are specified for the run.py function, the data the original data will be pulled from the internet and placed in the local path `data/data.csv`. It will then be uploaded to the the S3 bucket `s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv`. To change the S3 bucket (the 2021-msia423-hakimi-ben part of the previous path), input the desired name of your S3 bucket in the first argument after `loadData`. To change the name of the file when uploaded to S3 (the rawCSVUpload/raw.csv part of the previous path), input the desired file path in the second argument after `loadData`.
+If no optional inputs are specified for the run.py function, the data will be pulled from the internet and placed in the local path `data/data.csv`. It will then be uploaded to the the S3 bucket `s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv`. To change the S3 bucket (the 2021-msia423-hakimi-ben part of the previous path), input the desired name of your S3 bucket in the first argument after `loadData`. To change the name of the file when uploaded to S3 (the rawCSVUpload/raw.csv part of the previous path), input the desired file path in the second argument after `loadData`.
 
 ### 2. Initialize Database
 
@@ -132,7 +132,7 @@ To create a database using the Docker Image, run the following in the command li
 docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE -e SQLALCHEMY_DATABASE_URI nflgames run.py createDB
 ```
 
-To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` and use it as an import to the above docker command. If no `SQLALCHEMY_DATABASE_URI` is input, the default will be `sqlite:///data/msia423_db.db`.
+To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` and use it as an import to the above docker command. If no `SQLALCHEMY_DATABASE_URI` or `MYSQL_DATABASE` are input, the default will be `sqlite:///data/msia423_db.db`.
 
 ##### Local SQLite database
 

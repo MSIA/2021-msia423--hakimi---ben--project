@@ -1,5 +1,6 @@
-import boto3  
 import logging
+
+import boto3  
 
 ## Change level of following loggers to avoid over-use
 logging.getLogger("boto3").setLevel(logging.ERROR)
@@ -22,11 +23,11 @@ def upload(bucket, s3path, fileName):
 
     Args:
         bucket: (String), Required, name of S3 Bucket
-        s3Path: (String), Required, name to be used when saved to s3
-        fileName: (String), Required, local file path
+        s3Path: (String), Required, path to and name of file when saved in S3
+        fileName: (String), Required, local file path data is being uploaded from
 
     Returns:
-        csv file
+        None
 
     """
     try:    

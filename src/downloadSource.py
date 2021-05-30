@@ -11,15 +11,15 @@ logger = logging.getLogger(__name__)
 def downloadSource(inputPath1, inputPath2, outputPath):
 
     """
-    Downloads the xlxs file from sportsbookreviewonline.com
+    Downloads the xlxs file from sportsbookreviewonline.com and saves locally as specified to a csv
 
     Args:
         inputPath1: (String), Required, first half of data link 
         inputPath2: (String), Required, second half of data link
-        outputPath: (String), Required, name of the finished data file once retrieved
+        outputPath: (String), Required, name of the finished, local data path and file once data has been retrieved
 
     Returns:
-        csv file
+        None
 
     """
 
@@ -69,6 +69,3 @@ def downloadSource(inputPath1, inputPath2, outputPath):
 
 
     
-
-
-

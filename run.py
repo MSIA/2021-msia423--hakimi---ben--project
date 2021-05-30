@@ -4,7 +4,7 @@ import argparse
 import logging.config
 
 logging.config.fileConfig('config/logging/local.conf')
-logger = logging.getLogger('penny-lane-pipeline')
+logger = logging.getLogger()
 
 from src.upload import upload
 from src.downloadSource import downloadSource
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     sb_datatos3.add_argument("--FILEPATH", default = "data/external/data.csv", help="name of data to upload")
     sb_datatos3.add_argument("--INPUT1",default = "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20", help="Begining part of path")
     sb_datatos3.add_argument("--INPUT2",default = ".xlsx", help="end of path")
-    sb_datatos3.add_argument("--OUTPUTPATH", default = "data/external/data.csv", help="name of output after download")
+    sb_datatos3.add_argument("--OUTPUTPATH", default = "data/external/data.csv", help="path to data saved locally")
 
     args = parser.parse_args()
     sp_used = args.subparser_name
@@ -38,5 +38,3 @@ if __name__ == '__main__':
         upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
     else:
         parser.print_help()
-
-
