@@ -41,6 +41,7 @@ if __name__ == '__main__':
 
     if sp_used == "createDB":
         createDB(args.engine_string)
+        #createDB('sqlite:///data/msia423_db.db')
     elif sp_used == "loadData":
         downloadSource(args.INPUT1, args.INPUT2, args.OUTPUTPATH)
         upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
