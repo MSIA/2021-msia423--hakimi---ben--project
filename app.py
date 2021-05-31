@@ -44,7 +44,7 @@ def add_entry():
     """
 
     try:
-        input_games.add_track(artist=request.form['artist'], album=request.form['album'], title=request.form['title'])
+        input_games.add_game(artist=request.form['artist'], album=request.form['album'], title=request.form['title'])
         logger.info("New song added: %s by %s", request.form['title'], request.form['artist'])
         return redirect(url_for('index'))
     except:

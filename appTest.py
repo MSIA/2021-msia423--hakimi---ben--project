@@ -1,3 +1,5 @@
+import string
+import random
 from flask import Flask
 import traceback
 from flask import request, render_template, redirect, url_for
@@ -7,6 +9,7 @@ import pandas as pd
 import sklearn
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_auc_score, confusion_matrix, accuracy_score
+from src.createDB import inputGames
 
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
 
@@ -44,6 +47,7 @@ def addThem(homeTeam, awayTeam, spread):
            0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
            0,    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
            0]
+
 
         testdata = pd.DataFrame([inputs],columns = colnames)
         spreadNum = float(spread)
@@ -179,13 +183,27 @@ def addThem(homeTeam, awayTeam, spread):
             testdata['WashingtonV']=1
 
         x = rf.predict(testdata)[0]
+
+        def id_generator(size, chars=string.ascii_uppercase + string.digits):
+            return ''.join(random.choice(chars) for _ in range(size))
+
+
+        randKey = id_generator(20)
+
+        ig = inputGames(engine_string='sqlite:///data/msia423_db.db')
+        #ig.add_game(game_id=randKey, home_team=homeTeam, away_team=awayTeam, spread=spreadNum)
+
         if homeTeam == "home":
-            return render_template('error.html')
-        elif x == 0:
-            return "Away team covered"
-        elif x == 1:
-            return "Home team covered"
-    #return homeTeam+" "+awayTeam+" "+spread
+            return render_template('info.html')
+        elif homeTeam == awayTeam:
+            return render_template('sameTeam.html')
+        elif int(x) == 0:
+            ig.add_game(game_id=randKey, home_team=homeTeam, away_team=awayTeam, spread=spreadNum, home_cover=int(x))
+            return render_template('awayCover.html', awayTeam=awayTeam)
+        elif int(x) == 1:
+            ig.add_game(game_id=randKey, home_team=homeTeam, away_team=awayTeam, spread=spreadNum, home_cover=int(x))
+            return render_template('homeCover.html', homeTeam=homeTeam)
+
 
 if __name__ == '__main__':
     app.run()

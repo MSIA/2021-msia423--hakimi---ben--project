@@ -9,27 +9,11 @@
     <h3>
          <a href = "{{ url_for('addThem',homeTeam='home', awayTeam='away', spread='0') }}">Who will cover the spread?</a>
     </h3>
-
     <hr/>
-    <table>
-         <thead>
-            <tr>
-               <th>Home Team___</th>
-               <th>Away Team___</th>
-               <th>Spread</th>
-            </tr>
-         </thead>
-
-         <tbody>
-            {% for track in tracks %}
-               <tr>
-                   <td>{{ track.title }}</td>
-                   <td>{{ track.artist }}</td>
-                   <td>{{ track.spread }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
+    <div class="alert alert-danger" role="alert">
+      <p class="alert-link">This app is designed to make predictions on which team will cover the spread in an NFL game</p>
+      <p class="alert-link">To run, select a home team, road team and the spread in terms of the home team (if home is favored this should be nagtive, if road is favored it should be positive)</p>
+    </div>
       <form action="{{ url_for('home_page') }}" method=post class=add-entry>
       <dl>
         <br />

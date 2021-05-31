@@ -8,6 +8,7 @@ from sqlalchemy import Column, Integer, String, MetaData
 
 import logging
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql.sqltypes import Float
 
 ## Configure and name logger
 logging.basicConfig(
@@ -25,7 +26,8 @@ class Games(Base):
 	gameID = Column(String(100), primary_key=True)
 	homeTeam = Column(String(100), unique=False, nullable=False)
 	awayTeam = Column(String(100), unique=False, nullable=False)
-	line = Column(Integer, unique=False, nullable=False)
+	line = Column(Float, unique=False, nullable=False)
+	homeCover = Column(Integer, unique=False, nullable=False)
 	
 	def __repr__(self):
 		return '<Games %r>' % self.id
@@ -95,7 +97,8 @@ class inputGames():
 					game_id: str,
 					home_team: str,
 					away_team: str,
-					spread: int) -> None:
+					spread: float,
+					home_cover: int) -> None:
 		"""Seeds an existing database with additional games.
 		Args:
 			home_full (str): Full name of the home team in the game in question
@@ -118,7 +121,8 @@ class inputGames():
 			game = Games(gameID=game_id,
 									homeTeam=home_team,
 									awayTeam=away_team,
-									line=spread)
+									line=spread,
+									homeCover=home_cover)
 			session.add(game)
 			session.commit()
 			logger.info("%s at %s, %s, added to database", home_team, away_team, spread)

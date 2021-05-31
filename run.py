@@ -3,7 +3,9 @@ import argparse
 import logging
 import logging.config
 import pickle
-
+# import s3transfer
+# import boto3
+# import botocore
 logging.config.fileConfig('config/logging/local.conf')
 logger = logging.getLogger('penny-lane-pipeline')
 
@@ -11,7 +13,7 @@ import pandas as pd
 
 from src.upload import upload
 from src.downloadSource import downloadSource
-from src.createDB import createDB
+from src.createDB import createDB, inputGames
 import src.cleanFull as cf
 import src.getModel as gm
 from config.flaskconfig import SQLALCHEMY_DATABASE_URI
@@ -40,13 +42,15 @@ if __name__ == '__main__':
     sp_used = args.subparser_name
 
     if sp_used == "createDB":
-        createDB(args.engine_string)
-        #createDB('sqlite:///data/msia423_db.db')
+        #createDB(args.engine_string)
+        createDB('sqlite:///data/msia423_db.db')
+
     elif sp_used == "loadData":
         downloadSource(args.INPUT1, args.INPUT2, args.OUTPUTPATH)
         upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
     elif sp_used == "cleanData":
-        data = pd.read_csv('data/data.csv')
+        #data = pd.read_csv('data/data.csv')
+        data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
         data2007 = cf.seasonSummary(2007, data)
         data2008 = cf.seasonSummary(2008, data)
         data2009 = cf.seasonSummary(2009, data)
