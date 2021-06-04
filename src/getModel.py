@@ -7,9 +7,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_auc_score, confusion_matrix, accuracy_score
 
 def createModel(features, target):
-    rf = RandomForestClassifier(n_estimators=20, max_depth=5)
+    rf = RandomForestClassifier(n_estimators=20, max_depth=5, random_state=9876)
     X_train, X_test, y_train, y_test = sklearn.model_selection.train_test_split(
-        features, target, test_size=0.25)
+        features, target, test_size=0.25, random_state=1234)
     rf.fit(X_train, y_train)
     return rf, X_test, y_test
 

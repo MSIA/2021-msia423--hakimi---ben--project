@@ -14,7 +14,7 @@ COPY . /app
 RUN dos2unix app/boot.sh && apt-get --purge remove -y dos2unix
 RUN chmod +x app/boot.sh
 
-# EXPOSE 5000
+EXPOSE 5000
 
-ENTRYPOINT ["python3"]
-# CMD ["./app/boot.sh"]
+#ENTRYPOINT ["python3"]
+CMD ["./app/boot.sh"]

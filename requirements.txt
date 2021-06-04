@@ -29,3 +29,7 @@ pymysql
 Flask-SQLAlchemy==2.4.1
 PyYAML==5.3.1
 xlrd==1.2.0
+sklearn
+# numpy == 1.17.2
+# pytest == 5.4.2
+# requests == 2.25.1

@@ -49,8 +49,8 @@ if __name__ == '__main__':
         downloadSource(args.INPUT1, args.INPUT2, args.OUTPUTPATH)
         upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
     elif sp_used == "cleanData":
-        #data = pd.read_csv('data/data.csv')
-        data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
+        data = pd.read_csv('data/data.csv')
+        #data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
         data2007 = cf.seasonSummary(2007, data)
         data2008 = cf.seasonSummary(2008, data)
         data2009 = cf.seasonSummary(2009, data)
@@ -87,10 +87,7 @@ if __name__ == '__main__':
         features = pd.read_csv('data/features.csv', index_col=0)
         rf, X_test, y_test = gm.createModel(features, target)
         accuracy = gm.scoreModel(rf, X_test, y_test)
-
         print(accuracy)
-        print(list(features.columns))
-
         with open('models/model.pkl','wb') as f:
             pickle.dump(rf,f)
 

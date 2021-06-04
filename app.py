@@ -1,17 +1,14 @@
 import string
 import random
 from flask import Flask
-import traceback
 from flask import request, render_template, redirect, url_for
 import pickle
-from numpy import testing
 import pandas as pd
-import sklearn
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import roc_auc_score, confusion_matrix, accuracy_score
 from src.createDB import inputGames
 
 app = Flask(__name__, template_folder="app/templates", static_folder="app/static")
+
+app.config.from_pyfile('config/flaskconfig.py')
 
 @app.route('/', methods = ['GET', 'POST'])
 def home_page():
@@ -206,4 +203,5 @@ def addThem(homeTeam, awayTeam, spread):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=app.config["DEBUG"], port=app.config["PORT"], host=app.config["HOST"])
+    #app.run()
