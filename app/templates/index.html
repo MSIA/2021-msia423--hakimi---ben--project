@@ -5,19 +5,19 @@
     <link href="static/basic.css" rel="stylesheet">
 </head>
 
-<body>
-    <h3>
+<body style="background-color:white;">
+    <h3 style="font-family:'Times New Roman', Times, serif;">
          <a href = "{{ url_for('addThem',homeTeam='home', awayTeam='away', spread='0') }}">Who will cover the spread?</a>
     </h3>
     <hr/>
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" role="alert" style="font-family:'Times New Roman', Times, serif;">
       <p class="alert-link">This app is designed to make predictions on which team will cover the spread in an NFL game</p>
       <p class="alert-link">To run, select a home team, road team and the spread in terms of the home team (if home is favored this should be negative, if road is favored it should be positive)</p>
     </div>
       <form action="{{ url_for('home_page') }}" method=post class=add-entry>
       <dl>
         <br />
-        <label for="homeT">Pick Home Team:</label>
+        <label style="font-family:'Times New Roman', Times, serif;" for="homeT">Pick Home Team: </label>
         <select name="homeT" id="homeT">
            <option value="Arizona">Arizona</option>
            <option value="Atlanta">Atlanta</option>
@@ -53,7 +53,7 @@
            <option value="Washington">Washington</option>
         </select>
         <br />
-        <label for="awayT">Pick Away Team:&nbsp;</label>
+        <label style="font-family:'Times New Roman', Times, serif;" for="awayT">Pick Away Team:&nbsp;</label>
         <select name="awayT" id="awayT">
            <option value="Arizona">Arizona</option>
            <option value="Atlanta">Atlanta</option>
@@ -89,10 +89,10 @@
            <option value="Washington">Washington</option>
         </select>
         <br />
-        <label for="pickSpread">Pick Spread:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-        <input type=text size=15 name=pickSpread placeholder="Spread">
+        <label style="font-family:'Times New Roman', Times, serif;" for="pickSpread">Pick Spread:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input style="font-family:'Times New Roman', Times, serif;" type=text size=15 name=pickSpread placeholder="Spread", value="0">
         <br />
-        <input type=submit value=Predict>
+        <input style="font-family:'Times New Roman', Times, serif;" type=submit value=Predict>
       </dl>
     </form>
 

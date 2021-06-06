@@ -4,25 +4,25 @@ import logging
 import sqlalchemy as sql
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base 
-from sqlalchemy import Column, Integer, String, MetaData
+from sqlalchemy import Column, Integer, String
 
 import logging
+import logging.config
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.sqltypes import Float
 
-## Configure and name logger
-logging.basicConfig(
-    format="%(asctime)s %(levelname)-8s %(message)s", level=logging.DEBUG
-)
+
 logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
+
 
 ## Table with induvidual game information
 Base = declarative_base()
 
 class Games(Base):
-	"""Create a data model for the database to be set up for capturing songs """
+	"""Create a data model for the database to be set up for saving web app inputs """
 
-	__tablename__ = 'Games' ## Chose name of table
+	__tablename__ = 'Games'
 	gameID = Column(String(100), primary_key=True)
 	homeTeam = Column(String(100), unique=False, nullable=False)
 	awayTeam = Column(String(100), unique=False, nullable=False)
@@ -33,7 +33,6 @@ class Games(Base):
 		return '<Games %r>' % self.id
 
 def createDB(engine_string):
-
 	"""
     Create mysql database on either RDS or local
 
@@ -44,7 +43,6 @@ def createDB(engine_string):
         None
 
     """
-
 	try:
 		# set up mysql connection
 		engine = sql.create_engine(engine_string)
@@ -99,18 +97,15 @@ class inputGames():
 					away_team: str,
 					spread: float,
 					home_cover: int) -> None:
-		"""Seeds an existing database with additional games.
+		"""Adds game predictions to database.
+
 		Args:
-			home_full (str): Full name of the home team in the game in question
-			home_abv (str): Abbreviated name of the home team
-			home_wins (str): Number of wins on the season for the home team
-			home_losses (str): Number of losses on the season for the home team
-			away_full (str): Full name of the away team in the game in question
-			away_abv (str): Abbreviated name of the away team
-			away_wins (str): Number of wins on the season for the away team
-			away_losses (str): Number of losses on the season for the away team
-			game_date (str): Date on which the game is to be played
-			game_location (str): Location in which the game is to be played (ex: city, stadium)
+			game_id (str): Randomly generated key
+			home_team (str): Full Home Team Name
+			away_team (str): Full Away Team Name
+			spread (float): Spread input for matchup
+			home_cover (int): Prediction from model
+		
 		Returns:None
 		"""
 

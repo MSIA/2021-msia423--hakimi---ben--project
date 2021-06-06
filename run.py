@@ -1,22 +1,19 @@
 import argparse
-# from pathlib import Path
 import logging
 import logging.config
 import pickle
-# import s3transfer
-# import boto3
-# import botocore
-logging.config.fileConfig('config/logging/local.conf')
-logger = logging.getLogger('penny-lane-pipeline')
 
 import pandas as pd
 
 from src.upload import upload
 from src.downloadSource import downloadSource
-from src.createDB import createDB, inputGames
+from src.createDB import createDB
 import src.cleanFull as cf
 import src.getModel as gm
 from config.flaskconfig import SQLALCHEMY_DATABASE_URI
+
+logging.basicConfig(format='%(name)-12s %(levelname)-8s %(message)s', level=logging.DEBUG)
+logger = logging.getLogger('run')
 
 if __name__ == '__main__':
 
@@ -42,52 +39,51 @@ if __name__ == '__main__':
     sp_used = args.subparser_name
 
     if sp_used == "createDB":
-        #createDB(args.engine_string)
-        createDB('sqlite:///data/msia423_db.db')
+        createDB(args.engine_string)
+        #createDB('sqlite:///data/msia423_db.db')
 
     elif sp_used == "loadData":
         downloadSource(args.INPUT1, args.INPUT2, args.OUTPUTPATH)
         upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
     elif sp_used == "cleanData":
-        data = pd.read_csv('data/data.csv')
-        #data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
-        data2007 = cf.seasonSummary(2007, data)
-        data2008 = cf.seasonSummary(2008, data)
-        data2009 = cf.seasonSummary(2009, data)
-        data2010 = cf.seasonSummary(2010, data)
-        data2011 = cf.seasonSummary(2011, data)
-        data2012 = cf.seasonSummary(2012, data)
-        data2013 = cf.seasonSummary(2013, data)
-        data2014 = cf.seasonSummary(2014, data)
-        data2015 = cf.seasonSummary(2015, data)
-        data2016 = cf.seasonSummary(2016, data)
-        data2017 = cf.seasonSummary(2017, data)
-        data2018 = cf.seasonSummary(2018, data)
-        data2019 = cf.seasonSummary(2019, data)
-        data2020 = cf.seasonSummary(2020, data)
+        #data = pd.read_csv('data/data.csv')
+        data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
+        data2007 = cf.seasonSummary(2007, data, "year")
+        data2008 = cf.seasonSummary(2008, data, "year")
+        data2009 = cf.seasonSummary(2009, data, "year")
+        data2010 = cf.seasonSummary(2010, data, "year")
+        data2011 = cf.seasonSummary(2011, data, "year")
+        data2012 = cf.seasonSummary(2012, data, "year")
+        data2013 = cf.seasonSummary(2013, data, "year")
+        data2014 = cf.seasonSummary(2014, data, "year")
+        data2015 = cf.seasonSummary(2015, data, "year")
+        data2016 = cf.seasonSummary(2016, data, "year")
+        data2017 = cf.seasonSummary(2017, data, "year")
+        data2018 = cf.seasonSummary(2018, data, "year")
+        data2019 = cf.seasonSummary(2019, data, "year")
+        data2020 = cf.seasonSummary(2020, data, "year")
 
         frames = [data2007, data2008, data2009, data2010, data2011, data2012, data2013
          , data2014, data2015, data2016, data2017, data2018, data2019, data2020]
 
-        allSeasons = cf.allSeason(frames)
-        allSeasons = cf.noPush(allSeasons)
-        allSeasons = cf.fixNames(allSeasons, "home")
-        allSeasons = cf.fixNames(allSeasons, "away")
-        allSeasons = cf.onHot(allSeasons)
+        allSeasons = cf.allSeason(frames,"name")
+        allSeasons = cf.noPush(allSeasons,"name")
+        allSeasons = cf.fixNames(allSeasons, "home","col1","col2")
+        allSeasons = cf.fixNames(allSeasons, "away","col1","col2")
+        allSeasons = cf.onHot(allSeasons,"col1","col2")
 
-        target, features = cf.splitFeatures(allSeasons)
+        target, features = cf.splitFeatures(allSeasons,"yes")
         target.to_csv('data/target.csv')
         features.to_csv('data/features.csv')
-        print(target.head())
-        print(features.head())
 
     elif sp_used == "model":
 
         target = pd.read_csv('data/target.csv', index_col=0)
         features = pd.read_csv('data/features.csv', index_col=0)
-        rf, X_test, y_test = gm.createModel(features, target)
+        rf, X_test, y_test = gm.createModel(features, target, 123, 23, 20, 10, .25)
         accuracy = gm.scoreModel(rf, X_test, y_test)
-        print(accuracy)
+        with open('models/testAccuracy.txt', 'w') as filehandle:
+            filehandle.write("Test Accuracy = "+str(accuracy)+"\n")
         with open('models/model.pkl','wb') as f:
             pickle.dump(rf,f)
 

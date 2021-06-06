@@ -29,8 +29,13 @@ exec: true     # Enable running commands in your container.
 
 # Optional fields for more advanced use-cases.
 #
-#variables:                    # Pass environment variables as key value pairs.
-#  LOG_LEVEL: info
+variables:                    # Pass environment variables as key value pairs.
+  MYSQL_USER: admin
+  MYSQL_PASSWORD: Cubbies#21
+  MYSQL_HOST: nw-msia423-bjh6390.ct8z0uxoe18p.us-east-1.rds.amazonaws.com
+  MYSQL_PORT: 3306
+  MYSQL_DATABASE: msia423_db
+  LOG_LEVEL: info
 
 #secrets:                      # Pass secrets from AWS Systems Manager (SSM) Parameter Store.
 #  GITHUB_TOKEN: GITHUB_TOKEN  # The key is the name of the environment variable, the value is the name of the SSM parameter.

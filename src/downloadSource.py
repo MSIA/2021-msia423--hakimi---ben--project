@@ -1,12 +1,12 @@
-import pandas as pd
-import numpy as np
 import logging
+import logging.config
 
-## Configure and name logger
-logging.basicConfig(
-    format="%(asctime)s %(levelname)-8s %(message)s", level=logging.DEBUG
-)
+import pandas as pd
+
+
 logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
+
 
 def downloadSource(inputPath1, inputPath2, outputPath):
 
