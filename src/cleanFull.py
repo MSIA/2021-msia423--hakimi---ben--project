@@ -62,7 +62,7 @@ def noPush(data, colName):
         dataframe
     """
     try:
-        data[data['Home_Cover']!=2]
+        data = data[data['Home_Cover']!=2]
         data = data.reset_index(drop=True)
         logger.info("Succesfully executed noPush cleaning step for dataset")
         return data
