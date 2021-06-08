@@ -15,3 +15,9 @@ def test_fixNames_road():
     df_test = pd.DataFrame([[1,"Buffalo", "LVRaiders"], [0,"LAChargers", "LARams"], [1,"Buffalo", "LAChargers"], [2,"Houston", "Washington"], [0,"KansasCity", "Houston"]], columns = ["Home_Cover", "H_Team", "V_Team"])
     df_out = cf.fixNames(df_in, "away", "H_Team", "V_Team")
     assert df_test.equals(df_out)
+
+def test_fixNames_non_df():
+    df_in = 'I am not a dataframe'
+    
+    with pytest.raises(TypeError):
+        cf.fixNames(df_in, "home", "H_Team")

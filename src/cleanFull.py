@@ -36,6 +36,9 @@ def seasonSummary(year, data, yearCol):
         data = cr.tidyUp(data)
         logger.info("Succesfully executed seasonSummary cleaning step for dataset w/ year=%s", str(year))
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the seasonSummary cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run seasonSummary cleaning operation for dataset w/ year=%s", str(year))
 
@@ -47,6 +50,9 @@ def allSeason(list, dataname):
         allSeasonData.name = "allSeasons"
         logger.info("Succesfully executed allSeason cleaning step for datasets in %s", list)
         return allSeasonData
+    except TypeError:
+        logger.error("An invalid data type was input into the allSeason cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run allSeason cleaning operation for datasets in %s", list)
 
@@ -66,6 +72,9 @@ def noPush(data, colName):
         data = data.reset_index(drop=True)
         logger.info("Succesfully executed noPush cleaning step for dataset")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the noPush cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run noPush cleaning operation for dataset")
 
@@ -128,6 +137,9 @@ def fixNames(data, side, homeCol, roadCol):
                 i = i+1    
         logger.info("Succesfully executed fixNames cleaning step for the %s teams in dataset", side)
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the fixNames cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run fixNames cleaning operation for the %s teams in dataset", side)
 
@@ -160,6 +172,9 @@ def onHot(data, homeCol, roadCol):
         #     logger.warning("noPush cleaning step was used on dataset and only one column was used saved")
         # elif len(usefulList == 0):
         #     logger.warning("noPush cleaning step was used on dataset and an empty dataframe was saved")
+    except TypeError:
+        logger.error("An invalid data type was input into the oneHot cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run oneHot cleaning operation for dataset")
 
@@ -179,5 +194,8 @@ def splitFeatures(data, targetName):
         features = data.drop('Home_Cover',axis = 1)
         logger.info("Succesfully executed splitFeatures cleaning step for dataset")
         return target, features
+    except TypeError:
+        logger.error("An invalid data type was input into the splitFeatures cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run splitFeatures cleaning operation for dataset")

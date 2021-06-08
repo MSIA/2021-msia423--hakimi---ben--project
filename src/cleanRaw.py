@@ -22,6 +22,9 @@ def removePK(rowcount, data):
             i=i+1
         logger.info("Succesfully executed removePK cleaning step")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the removePK cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run removePK cleaning operation")
 
@@ -42,6 +45,9 @@ def oneLine(rowcount, data):
             i = i+2
         logger.info("Succesfully executed oneLine cleaning step")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the oneLine cleaning function") 
+        raise TypeError  
     except:
         logger.error("Unable to run oneLine cleaning operation")
 
@@ -56,6 +62,9 @@ def findFavored(rowcount, data):
             i = i+2
         logger.info("Succesfully executed findFavored cleaning step")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the findFavored cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run findFavored cleaning operation")
 
@@ -70,6 +79,9 @@ def correctSpread(rowcount, data):
             i = i+2
         logger.info("Succesfully executed correctSpread cleaning step")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the correctSpread cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run correctSpread cleaning operation")
 
@@ -83,6 +95,9 @@ def homePick(rowcount, data):
             i = i+2
         logger.info("Succesfully executed homePick cleaning step")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the homePick cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run homePick cleaning operation")
 
@@ -107,6 +122,9 @@ def whoCovered(rowcount, data):
             i = i+2
         logger.info("Succesfully executed whoCovered cleaning step")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the whoCovered cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run whoCovered cleaning operation")
 
@@ -121,6 +139,9 @@ def homeSpread(rowcount, data):
             i = i+2
         logger.info("Succesfully executed homeSpread cleaning step")
         return data
+    except TypeError:
+        logger.error("An invalid data type was input into the homeSpread cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run homeSpread cleaning operation")
     
@@ -137,5 +158,8 @@ def tidyUp(data):
         dataRegSeason.columns = ['Date','V_Team','H_Team','Favorite','Spread','H_diff','Home_Cover','homeSpread']
         logger.info("Succesfully executed tidyUp cleaning step")
         return dataRegSeason
+    except TypeError:
+        logger.error("An invalid data type was input into the tidyUp cleaning function") 
+        raise TypeError 
     except:
         logger.error("Unable to run tidyUp cleaning operation")
