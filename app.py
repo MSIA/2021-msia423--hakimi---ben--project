@@ -18,6 +18,8 @@ app = Flask(__name__, template_folder="app/templates", static_folder="app/static
 
 app.config.from_pyfile('config/flaskconfig.py')
 
+## DOWNLOAD FROM S3
+
 @app.route('/', methods = ['GET', 'POST'])
 def home_page():
     if request.method == 'GET':

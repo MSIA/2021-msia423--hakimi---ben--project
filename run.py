@@ -5,7 +5,7 @@ import pickle
 
 import pandas as pd
 
-from src.upload import upload
+from src.upload import upload, download
 from src.downloadSource import downloadSource
 from src.createDB import createDB
 import src.cleanFull as cf
@@ -47,7 +47,9 @@ if __name__ == '__main__':
         upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
     elif sp_used == "cleanData":
         #data = pd.read_csv('data/data.csv')
-        data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
+        #data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
+        download('2021-msia423-hakimi-ben','rawCSVUpload/raw.csv','data/datafroms3.csv')
+        data = pd.read_csv('data/datafroms3.csv')
         data2007 = cf.seasonSummary(2007, data, "year")
         data2008 = cf.seasonSummary(2008, data, "year")
         data2009 = cf.seasonSummary(2009, data, "year")
@@ -86,6 +88,8 @@ if __name__ == '__main__':
             filehandle.write("Test Accuracy = "+str(accuracy)+"\n")
         with open('models/model.pkl','wb') as f:
             pickle.dump(rf,f)
+        upload('2021-msia423-hakimi-ben', 'models/model.pkl', 'models/model.pkl')
+        ##upload to s3
 
     else:
         parser.print_help()

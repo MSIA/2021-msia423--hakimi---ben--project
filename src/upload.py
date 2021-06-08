@@ -39,3 +39,28 @@ def upload(bucket, s3path, fileName):
 
     except:
         logger.error("Unable to load local data to S3 bucket w/ %s File Name= %s, Please check inputs and AWS Credentials", bucket, s3path)
+
+## function to be called in run.py
+def download(bucket, s3path, fileName):
+
+    """
+    Downloads s3 file to local
+
+    Args:
+        bucket: (String), Required, name of S3 Bucket
+        s3Path: (String), Required, path to and name of file when saved in S3
+        fileName: (String), Required, local file path data is being uploaded from
+
+    Returns:
+        None
+
+    """
+    try:    
+        s3 = boto3.resource("s3")
+        bucket = s3.Bucket(bucket)
+        bucket.download_file(s3path, fileName)
+
+        logger.info("Data uploaded to S3 bucket w/ %s File Name= %s", bucket, s3path)
+
+    except:
+        logger.error("Unable to load local data to S3 bucket w/ %s File Name= %s, Please check inputs and AWS Credentials", bucket, s3path)
