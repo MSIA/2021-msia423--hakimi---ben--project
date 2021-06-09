@@ -10,10 +10,10 @@
 - [Directory structure](#directory-structure)
 - [Running the app](#running-the-app)
   * [Create RDS Database and upload raw data to S3](#create-RDS-database-and-upload-raw-data-to-S3)
-  * [Cleaning the Data and creating a reproducable model](#step2)
-  * [Building the web app](#step3)
+  * [Cleaning the Data and creating a reproducable model](#cleaning-the-data-and-creating-a-reproducable-model)
+  * [Building the web app](#building-the-web-app)
   * [Run Tests](#run-tests)
-  * [Run entire pipeline at once](#pipeline)
+  * [Run entire pipeline at once](#run-entire-pipeline-at-once)
 
 <!-- tocstop -->
 
