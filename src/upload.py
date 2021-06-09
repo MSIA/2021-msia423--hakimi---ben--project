@@ -36,7 +36,10 @@ def upload(bucket, s3path, fileName):
         bucket.upload_file(s3path, fileName)
 
         logger.info("Data uploaded to S3 bucket w/ %s File Name= %s", bucket, s3path)
-
+    except IsADirectoryError:
+        logger.error("IsADirectoryError:  %s must be a file, not folder, to upload", fileName)
+    except FileNotFoundError:
+        logger.error("FileNotFoundError: Local path = %s to upload data from cannot be found. Check filepath and try again.", fileName)
     except:
         logger.error("Unable to load local data to S3 bucket w/ %s File Name= %s, Please check inputs and AWS Credentials", bucket, s3path)
 
@@ -60,7 +63,8 @@ def download(bucket, s3path, fileName):
         bucket = s3.Bucket(bucket)
         bucket.download_file(s3path, fileName)
 
-        logger.info("Data uploaded to S3 bucket w/ %s File Name= %s", bucket, s3path)
-
+        logger.info("Data succesfully downloaded from S3 bucket w/ %s File Name= %s to local path = %s", bucket, s3path, fileName)
+    except FileNotFoundError:
+        logger.error("FileNotFoundError: Local path = %s to store data cannot be found. Check filepath and try again.", fileName)
     except:
         logger.error("Unable to load local data to S3 bucket w/ %s File Name= %s, Please check inputs and AWS Credentials", bucket, s3path)

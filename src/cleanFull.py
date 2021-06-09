@@ -23,7 +23,7 @@ def seasonSummary(year, data, yearCol):
         dataframe
     """
     try:
-        data = data[data['year']==year]
+        data = data[data[yearCol]==year] 
         data = data.reset_index(drop=True)
         rowcount = data.shape[0]
         data = cr.removePK(rowcount, data)
@@ -42,12 +42,11 @@ def seasonSummary(year, data, yearCol):
     except:
         logger.error("Unable to run seasonSummary cleaning operation for dataset w/ year=%s", str(year))
 
-def allSeason(list, dataname):
+def allSeason(list):
     """Concat List of dataframes"""
     try:
         allSeasonData = pd.concat(list)
         allSeasonData = allSeasonData.reset_index(drop=True)
-        allSeasonData.name = "allSeasons"
         logger.info("Succesfully executed allSeason cleaning step for datasets in %s", list)
         return allSeasonData
     except TypeError:
@@ -68,7 +67,7 @@ def noPush(data, colName):
         dataframe
     """
     try:
-        data = data[data['Home_Cover']!=2]
+        data = data[data[colName]!=2] 
         data = data.reset_index(drop=True)
         logger.info("Succesfully executed noPush cleaning step for dataset")
         return data
@@ -96,44 +95,44 @@ def fixNames(data, side, homeCol, roadCol):
         if side == "home":
             i = 0
             while i < numLines:
-                if data['H_Team'][i]=="BuffaloBills":
-                    data['H_Team'][i]="Buffalo"
-                elif data['H_Team'][i]=="LasVegas" or data['H_Team'][i]=="Oakland":
-                    data['H_Team'][i]="LVRaiders"
-                elif data['H_Team'][i]=="SanDiego":
-                    data['H_Team'][i]="LAChargers"
-                elif data['H_Team'][i]=="SanDiego":
-                    data['H_Team'][i]="LAChargers"
-                elif data['H_Team'][i]=="Washingtom":
-                    data['H_Team'][i]="Washington"
-                elif data['H_Team'][i]=="LosAngeles" or data['H_Team'][i]=="St.Louis":
-                    data['H_Team'][i]="LARams"
-                elif data['H_Team'][i]=="HoustonTexans":
-                    data['H_Team'][i]="Houston"
-                elif data['H_Team'][i]=="NewYork":
-                    data['H_Team'][i]="NYGiants"
-                elif data['H_Team'][i]=="Tampa":
-                    data['H_Team'][i]="TampaBay"
-                elif data['H_Team'][i]=="Kansas" or data['H_Team'][i]=="KCChiefs":
-                    data['H_Team'][i]="KansasCity"
+                if data[homeCol][i]=="BuffaloBills":
+                    data[homeCol][i]="Buffalo"
+                elif data[homeCol][i]=="LasVegas" or data[homeCol][i]=="Oakland":
+                    data[homeCol][i]="LVRaiders"
+                elif data[homeCol][i]=="SanDiego":
+                    data[homeCol][i]="LAChargers"
+                elif data[homeCol][i]=="SanDiego":
+                    data[homeCol][i]="LAChargers"
+                elif data[homeCol][i]=="Washingtom":
+                    data[homeCol][i]="Washington"
+                elif data[homeCol][i]=="LosAngeles" or data[homeCol][i]=="St.Louis":
+                    data[homeCol][i]="LARams"
+                elif data[homeCol][i]=="HoustonTexans":
+                    data[homeCol][i]="Houston"
+                elif data[homeCol][i]=="NewYork":
+                    data[homeCol][i]="NYGiants"
+                elif data[homeCol][i]=="Tampa":
+                    data[homeCol][i]="TampaBay"
+                elif data[homeCol][i]=="Kansas" or data[homeCol][i]=="KCChiefs":
+                    data[homeCol][i]="KansasCity"
                 i = i+1    
         elif side == "away":
             i = 0
             while i < numLines:
-                if data['V_Team'][i]=="BuffaloBills":
-                    data['V_Team'][i]="Buffalo"
-                elif data['V_Team'][i]=="LasVegas" or data['V_Team'][i]=="Oakland":
-                    data['V_Team'][i]="LVRaiders"
-                elif data['V_Team'][i]=="SanDiego":
-                    data['V_Team'][i]="LAChargers"
-                elif data['V_Team'][i]=="SanDiego":
-                    data['V_Team'][i]="LAChargers"
-                elif data['V_Team'][i]=="Washingtom":
-                    data['V_Team'][i]="Washington"
-                elif data['V_Team'][i]=="LosAngeles" or data['V_Team'][i]=="St.Louis":
-                    data['V_Team'][i]="LARams"
-                elif data['V_Team'][i]=="HoustonTexans":
-                    data['V_Team'][i]="Houston"
+                if data[roadCol][i]=="BuffaloBills":
+                    data[roadCol][i]="Buffalo"
+                elif data[roadCol][i]=="LasVegas" or data[roadCol][i]=="Oakland":
+                    data[roadCol][i]="LVRaiders"
+                elif data[roadCol][i]=="SanDiego":
+                    data[roadCol][i]="LAChargers"
+                elif data[roadCol][i]=="SanDiego":
+                    data[roadCol][i]="LAChargers"
+                elif data[roadCol][i]=="Washingtom":
+                    data[roadCol][i]="Washington"
+                elif data[roadCol][i]=="LosAngeles" or data[roadCol][i]=="St.Louis":
+                    data[roadCol][i]="LARams"
+                elif data[roadCol][i]=="HoustonTexans":
+                    data[roadCol][i]="Houston"
                 i = i+1    
         logger.info("Succesfully executed fixNames cleaning step for the %s teams in dataset", side)
         return data
@@ -143,7 +142,7 @@ def fixNames(data, side, homeCol, roadCol):
     except:
         logger.error("Unable to run fixNames cleaning operation for the %s teams in dataset", side)
 
-def onHot(data, homeCol, roadCol):
+def onHot(data, homeCol, roadCol, usefulList):
     """
     Creates one hot encoded columns for all categorical variables
 
@@ -157,21 +156,23 @@ def onHot(data, homeCol, roadCol):
         dataframe
     """
     try:
-        useful = data[['V_Team', 'H_Team','homeSpread','Home_Cover']]
-        useful['V_Team'] = useful['V_Team'] + "V"
-        oneHotV = pd.get_dummies(useful['V_Team'])
-        useful = useful.drop('V_Team',axis = 1)
+        useful = data[usefulList]
+        useful[roadCol] = useful[roadCol] + "V"
+        oneHotV = pd.get_dummies(useful[roadCol])
+        useful = useful.drop(roadCol,axis = 1)
         useful = pd.concat([useful, oneHotV], axis = 1)
-        oneHotH = pd.get_dummies(useful['H_Team'])
-        useful = useful.drop('H_Team',axis = 1)
+        oneHotH = pd.get_dummies(useful[homeCol])
+        useful = useful.drop(homeCol,axis = 1)
         useful = pd.concat([useful, oneHotH], axis = 1)
-        # if len(usefulList > 1):
-        logger.info("Succesfully executed oneHot cleaning step for dataset")
-        return useful
-        # elif len(usefulList == 1):
-        #     logger.warning("noPush cleaning step was used on dataset and only one column was used saved")
-        # elif len(usefulList == 0):
-        #     logger.warning("noPush cleaning step was used on dataset and an empty dataframe was saved")
+        if (len(usefulList) > 1):
+            logger.info("Succesfully executed oneHot cleaning step for dataset")
+            return useful
+        elif (len(usefulList) == 1):
+            logger.warning("noPush cleaning step was used on dataset and only one column was saved")
+            return useful
+        elif (len(usefulList) == 0):
+            logger.warning("noPush cleaning step was used on dataset and an empty dataframe was saved")
+            return useful
     except TypeError:
         logger.error("An invalid data type was input into the oneHot cleaning function") 
         raise TypeError 
@@ -190,8 +191,8 @@ def splitFeatures(data, targetName):
         Two dataframes, one with response variable the other with input variables
     """
     try:
-        target = data['Home_Cover']
-        features = data.drop('Home_Cover',axis = 1)
+        target = data[targetName]
+        features = data.drop(targetName,axis = 1)
         logger.info("Succesfully executed splitFeatures cleaning step for dataset")
         return target, features
     except TypeError:

@@ -1,0 +1,75 @@
+loadData:
+  downloadSource:
+    inputPath1: "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20"
+    inputPath2: ".xlsx"
+    outputPath: "data/rawdata.csv"
+  uploadtos3:
+    bucket: "2021-msia423-hakimi-ben"
+    fileName: "rawCSVUpload/raw.csv"
+    s3path: "data/rawdata.csv"
+
+cleanData:
+  downloadfroms3:
+    bucket: '2021-msia423-hakimi-ben'
+    s3path: 'rawCSVUpload/raw.csv'
+    fileName: 'data/datafroms3.csv'
+  readlocal:
+    localPath: 'data/datafroms3.csv'
+  seasonSummary:
+    colName: "year"
+    year1: 2007
+    year2: 2008
+    year3: 2009
+    year4: 2010
+    year5: 2011
+    year6: 2012
+    year7: 2013
+    year8: 2014
+    year9: 2015
+    year10: 2016
+    year11: 2017
+    year12: 2018
+    year13: 2019
+    year14: 2020
+  noPush:
+    colName: 'Home_Cover'
+  fixNamesHome: 
+    side: "home"
+    homeCol: "H_Team"
+    roadCol: "V_Team"
+  fixNamesRoad:
+    side: "away"
+    homeCol: "H_Team"
+    roadCol: "V_Team"
+  onHot:
+    homeCol: "H_Team"
+    roadCol: "V_Team"
+    usefulList: ['V_Team', 'H_Team','homeSpread','Home_Cover']
+  splitFeatures:
+    targetName: "Home_Cover"
+  saveFeatures:
+    targetPath: 'data/target.csv'
+    featuresPath: 'data/features.csv'
+
+model:
+  loadFeatures:
+    targetPath: 'data/target.csv'
+    featuresPath: 'data/features.csv'
+  createModel:
+     rfRandState: 123
+     splitRandState: 23
+     n_est: 20
+     mx_d: 10
+     test_sz: .25
+  saveModel:
+    accuracyPath: 'models/testAccuracy.txt'
+    modelPath: 'models/model.pkl'
+  modeltos3:
+    bucket: '2021-msia423-hakimi-ben'
+    s3path: 'models/model.pkl'
+    fileName: 'models/model.pkl'
+
+app:
+  getModel:
+    modelPath: 'models/model.pkl'
+  

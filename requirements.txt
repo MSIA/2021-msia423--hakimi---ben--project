@@ -4,7 +4,6 @@
 
 boto3>=1.17.46
 botocore>=1.20.50
-
 certifi>=2020.12.5
 cffi>=1.14.5
 cryptography>=3.4.7
@@ -32,6 +31,5 @@ xlrd==1.2.0
 sklearn
 fsspec
 s3fs
-# numpy == 1.17.2
-# pytest == 5.4.2
-# requests == 2.25.1
+pytest == 5.4.2
+

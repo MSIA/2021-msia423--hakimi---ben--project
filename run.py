@@ -4,6 +4,7 @@ import logging.config
 import pickle
 
 import pandas as pd
+import yaml
 
 from src.upload import upload, download
 from src.downloadSource import downloadSource
@@ -17,7 +18,16 @@ logger = logging.getLogger('run')
 
 if __name__ == '__main__':
 
+    # Load configuration file for parameters and to path
+    with open('config/config.yaml', "r") as f:
+        config = yaml.load(f, Loader=yaml.FullLoader)
+
+    configloadData = config["loadData"]
+    configcleanData = config["cleanData"]
+    configmodel = config["model"]
+
     parser = argparse.ArgumentParser(description = "Scrape Data and upload data to S3/Create DB")
+
     subparser = parser.add_subparsers(dest='subparser_name')
 
     sb_createdb = subparser.add_parser("createDB", description = "Create Database")
@@ -25,14 +35,9 @@ if __name__ == '__main__':
                            help="SQLAlchemy connection URI for database")
 
     sb_datatos3 = subparser.add_parser("loadData", description = "Put data into S3 bucket")
-    sb_datatos3.add_argument("BUCKETNAME", help="Name of S3 Bucket")
-    sb_datatos3.add_argument("S3PATH", help="path to S3 Bucket")
-    sb_datatos3.add_argument("--FILEPATH", default = "data/external/data.csv", help="name of data to upload")
-    sb_datatos3.add_argument("--INPUT1",default = "https://www.sportsbookreviewsonline.com/scoresoddsarchives/nfl/nfl%20odds%20", help="Begining part of path")
-    sb_datatos3.add_argument("--INPUT2",default = ".xlsx", help="end of path")
-    sb_datatos3.add_argument("--OUTPUTPATH", default = "data/external/data.csv", help="name of output after download")
 
     sb_cleanData = subparser.add_parser("cleanData", description = "Put data into S3 bucket")
+    
     sb_model = subparser.add_parser("model", description = "Put data into S3 bucket")
 
     args = parser.parse_args()
@@ -40,57 +45,66 @@ if __name__ == '__main__':
 
     if sp_used == "createDB":
         createDB(args.engine_string)
-        #createDB('sqlite:///data/msia423_db.db')
 
     elif sp_used == "loadData":
-        downloadSource(args.INPUT1, args.INPUT2, args.OUTPUTPATH)
-        upload(args.BUCKETNAME, args.FILEPATH, args.S3PATH)
+        downloadSource(**configloadData['downloadSource'])
+        upload(**configloadData['uploadtos3'])
+
     elif sp_used == "cleanData":
-        #data = pd.read_csv('data/data.csv')
-        #data = pd.read_csv('s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv')
-        download('2021-msia423-hakimi-ben','rawCSVUpload/raw.csv','data/datafroms3.csv')
-        data = pd.read_csv('data/datafroms3.csv')
-        data2007 = cf.seasonSummary(2007, data, "year")
-        data2008 = cf.seasonSummary(2008, data, "year")
-        data2009 = cf.seasonSummary(2009, data, "year")
-        data2010 = cf.seasonSummary(2010, data, "year")
-        data2011 = cf.seasonSummary(2011, data, "year")
-        data2012 = cf.seasonSummary(2012, data, "year")
-        data2013 = cf.seasonSummary(2013, data, "year")
-        data2014 = cf.seasonSummary(2014, data, "year")
-        data2015 = cf.seasonSummary(2015, data, "year")
-        data2016 = cf.seasonSummary(2016, data, "year")
-        data2017 = cf.seasonSummary(2017, data, "year")
-        data2018 = cf.seasonSummary(2018, data, "year")
-        data2019 = cf.seasonSummary(2019, data, "year")
-        data2020 = cf.seasonSummary(2020, data, "year")
+        download(**configcleanData['downloadfroms3'])
+        data = pd.read_csv(configcleanData['readlocal']['localPath'])
+        data2007 = cf.seasonSummary(configcleanData['seasonSummary']['year1'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2008 = cf.seasonSummary(configcleanData['seasonSummary']['year2'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2009 = cf.seasonSummary(configcleanData['seasonSummary']['year3'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2010 = cf.seasonSummary(configcleanData['seasonSummary']['year4'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2011 = cf.seasonSummary(configcleanData['seasonSummary']['year5'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2012 = cf.seasonSummary(configcleanData['seasonSummary']['year6'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2013 = cf.seasonSummary(configcleanData['seasonSummary']['year7'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2014 = cf.seasonSummary(configcleanData['seasonSummary']['year8'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2015 = cf.seasonSummary(configcleanData['seasonSummary']['year9'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2016 = cf.seasonSummary(configcleanData['seasonSummary']['year10'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2017 = cf.seasonSummary(configcleanData['seasonSummary']['year11'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2018 = cf.seasonSummary(configcleanData['seasonSummary']['year12'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2019 = cf.seasonSummary(configcleanData['seasonSummary']['year13'],
+         data, configcleanData['seasonSummary']['colName'])
+        data2020 = cf.seasonSummary(configcleanData['seasonSummary']['year14'],
+         data, configcleanData['seasonSummary']['colName'])
 
-        frames = [data2007, data2008, data2009, data2010, data2011, data2012, data2013
-         , data2014, data2015, data2016, data2017, data2018, data2019, data2020]
+        frames = [data2007, data2008, data2009, data2010, data2011, data2012, data2013,
+         data2014, data2015, data2016, data2017, data2018, data2019, data2020]
+        allSeasons = cf.allSeason(frames)
+        allSeasons = cf.noPush(allSeasons,**configcleanData['noPush'])
+        allSeasons = cf.fixNames(allSeasons, **configcleanData['fixNamesHome'])
+        allSeasons = cf.fixNames(allSeasons, **configcleanData['fixNamesRoad'])
+        allSeasons = cf.onHot(allSeasons, **configcleanData['onHot'])
 
-        allSeasons = cf.allSeason(frames,"name")
-        allSeasons = cf.noPush(allSeasons,"name")
-        allSeasons = cf.fixNames(allSeasons, "home","col1","col2")
-        allSeasons = cf.fixNames(allSeasons, "away","col1","col2")
-        allSeasons = cf.onHot(allSeasons,"col1","col2")
-
-        target, features = cf.splitFeatures(allSeasons,"yes")
-        target.to_csv('data/target.csv')
-        features.to_csv('data/features.csv')
+        target, features = cf.splitFeatures(allSeasons,**configcleanData['splitFeatures'])
+        target.to_csv(configcleanData['saveFeatures']['targetPath'])
+        features.to_csv(configcleanData['saveFeatures']['featuresPath'])
 
     elif sp_used == "model":
 
-        target = pd.read_csv('data/target.csv', index_col=0)
-        features = pd.read_csv('data/features.csv', index_col=0)
-        rf, X_test, y_test = gm.createModel(features, target, 123, 23, 20, 10, .25)
+        target = pd.read_csv(configmodel['loadFeatures']['targetPath'], index_col=0)
+        features = pd.read_csv(configmodel['loadFeatures']['featuresPath'], index_col=0)
+        rf, X_test, y_test = gm.createModel(features, target, **configmodel['createModel'])
         accuracy = gm.scoreModel(rf, X_test, y_test)
-        with open('models/testAccuracy.txt', 'w') as filehandle:
+        with open(configmodel['saveModel']['accuracyPath'], 'w') as filehandle:
             filehandle.write("Test Accuracy = "+str(accuracy)+"\n")
-        with open('models/model.pkl','wb') as f:
+        with open(configmodel['saveModel']['modelPath'],'wb') as f:
             pickle.dump(rf,f)
-        upload('2021-msia423-hakimi-ben', 'models/model.pkl', 'models/model.pkl')
-        ##upload to s3
-
+        upload(**configmodel['modeltos3'])
     else:
         parser.print_help()
 

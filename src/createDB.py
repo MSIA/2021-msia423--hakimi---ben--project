@@ -51,7 +51,6 @@ def createDB(engine_string):
 		Base.metadata.create_all(engine)
 
 		logger.info("Database successfully created using ENGINE_STRING = %s", engine_string)
-
 	except:
 		logger.error("Failed to create database using ENGINE_STRING = %s, please check inputs and credentials", engine_string)
 
@@ -97,7 +96,8 @@ class inputGames():
 					away_team: str,
 					spread: float,
 					home_cover: int) -> None:
-		"""Adds game predictions to database.
+		"""
+		Adds game predictions to database.
 
 		Args:
 			game_id (str): Randomly generated key
@@ -109,9 +109,8 @@ class inputGames():
 		Returns:None
 		"""
 
-
 		try:
-			# Initiate the sesion, add the game, commit the session, then close
+			# Initiate the sesion, add game, commit, close
 			session = self.session
 			game = Games(gameID=game_id,
 									homeTeam=home_team,
