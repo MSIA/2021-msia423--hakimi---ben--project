@@ -5,37 +5,94 @@
     <link href="static/basic.css" rel="stylesheet">
 </head>
 
-<body>
-    <h3>
-         <a href = "{{ url_for('index') }}">Penny Lane Music Recommender</a>
+<body style="background-color:white;">
+    <h3 style="font-family:'Times New Roman', Times, serif;">
+         <a href = "{{ url_for('addThem',homeTeam='home', awayTeam='away', spread='0') }}">Who will cover the spread?</a>
     </h3>
-
     <hr/>
-    <table>
-         <thead>
-            <tr>
-               <th>Title</th>
-               <th>Artist</th>
-               <th>Album</th>
-            </tr>
-         </thead>
-
-         <tbody>
-            {% for track in tracks %}
-               <tr>
-                   <td>{{ track.title }}</td>
-                   <td>{{ track.artist }}</td>
-                   <td>{{ track.album }}</td>
-               </tr>
-            {% endfor %}
-         </tbody>
-      </table>
-      <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+    <div class="alert alert-danger" role="alert" style="font-family:'Times New Roman', Times, serif;">
+      <p class="alert-link">This app is designed to make predictions on which team will cover the spread in an NFL game</p>
+      <p class="alert-link">To run, select a home team, road team and the spread in terms of the home team (if home is favored this should be negative, if road is favored it should be positive)</p>
+    </div>
+      <form action="{{ url_for('home_page') }}" method=post class=add-entry>
       <dl>
-        <input type=text size=15 name=title placeholder="Title">
-        <input type=text size=15 name=artist placeholder="Artist">
-        <input type=text size=15 name=album placeholder="Album">
-        <input type=submit value=Add>
+        <br />
+        <label style="font-family:'Times New Roman', Times, serif;" for="homeT">Pick Home Team: </label>
+        <select name="homeT" id="homeT">
+           <option value="Arizona">Arizona</option>
+           <option value="Atlanta">Atlanta</option>
+           <option value="Baltimore">Baltimore</option>
+           <option value="Buffalo">Buffalo</option>
+           <option value="Carolina">Carolina</option>
+           <option value="Chicago">Chicago</option>
+           <option value="Cincinnati">Cincinnati</option>
+           <option value="Cleveland">Cleveland</option>
+           <option value="Dallas">Dallas</option>
+           <option value="Denver">Denver</option>
+           <option value="Detroit">Detroit</option>
+           <option value="GreenBay">GreenBay</option>
+           <option value="Houston">Houston</option>
+           <option value="Indianapolis">Indianapolis</option>
+           <option value="Jacksonville">Jacksonville</option>
+           <option value="KansasCity">KansasCity</option>
+           <option value="LasVegas">LasVegas</option>
+           <option value="LosAngelesChargers">LosAngelesChargers</option>
+           <option value="LosAngelesRams">LosAngelesRams</option>
+           <option value="Miami">Miami</option>
+           <option value="Minnesota">Minnesota</option>
+           <option value="NewEngland">NewEngland</option>
+           <option value="NewOrleans">NewOrleans</option>
+           <option value="NewYorkGiants">NewYorkGiants</option>
+           <option value="NewYorkJets">NewYorkJets</option>
+           <option value="Philadelphia">Philadelphia</option>
+           <option value="Pittsburgh">Pittsburgh</option>
+           <option value="SanFrancisco">SanFrancisco</option>
+           <option value="Seattle">Seattle</option>
+           <option value="TampaBay">TampaBay</option>
+           <option value="Tennessee">Tennessee</option>
+           <option value="Washington">Washington</option>
+        </select>
+        <br />
+        <label style="font-family:'Times New Roman', Times, serif;" for="awayT">Pick Away Team:&nbsp;</label>
+        <select name="awayT" id="awayT">
+           <option value="Arizona">Arizona</option>
+           <option value="Atlanta">Atlanta</option>
+           <option value="Baltimore">Baltimore</option>
+           <option value="Buffalo">Buffalo</option>
+           <option value="Carolina">Carolina</option>
+           <option value="Chicago">Chicago</option>
+           <option value="Cincinnati">Cincinnati</option>
+           <option value="Cleveland">Cleveland</option>
+           <option value="Dallas">Dallas</option>
+           <option value="Denver">Denver</option>
+           <option value="Detroit ">Detroit</option>
+           <option value="GreenBay">GreenBay</option>
+           <option value="Houston">Houston</option>
+           <option value="Indianapolis">Indianapolis</option>
+           <option value="Jacksonville">Jacksonville</option>
+           <option value="KansasCity">KansasCity</option>
+           <option value="LasVegas">LasVegas</option>
+           <option value="LosAngelesChargers">LosAngelesChargers</option>
+           <option value="LosAngelesRams">Los Angeles Rams</option>
+           <option value="Miami">Miami</option>
+           <option value="Minnesota">Minnesota</option>
+           <option value="NewEngland">NewEngland</option>
+           <option value="NewOrleans">NewOrleans</option>
+           <option value="NewYorkGiants">NewYorkGiants</option>
+           <option value="NewYorkJets">NewYorkJets</option>
+           <option value="Philadelphia">Philadelphia</option>
+           <option value="Pittsburgh">Pittsburgh</option>
+           <option value="SanFrancisco">SanFrancisco</option>
+           <option value="Seattle">Seattle</option>
+           <option value="TampaBay">TampaBay</option>
+           <option value="Tennessee">Tennessee</option>
+           <option value="Washington">Washington</option>
+        </select>
+        <br />
+        <label style="font-family:'Times New Roman', Times, serif;" for="pickSpread">Pick Spread:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <input style="font-family:'Times New Roman', Times, serif;" type=text size=15 name=pickSpread placeholder="Spread", value="0">
+        <br />
+        <input style="font-family:'Times New Roman', Times, serif;" type=submit value=Predict>
       </dl>
     </form>
 

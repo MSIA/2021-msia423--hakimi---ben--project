@@ -10,9 +10,12 @@
          <a href = "{{ url_for('home_page') }}">Make another prediction</a>
     </h3>
 
-    <div class="alert alert-danger" role="alert">
-  <p class="alert-link">Please input a numerical value for spread</p>
-    </div>
+    <h4>
+        We predict {{homeTeam}} will cover at home against {{awayTeam}} when the spread is {{spread}}.
+   </h4>
+   <h3>
+    <img class="logo" src={{homeimg}} alt="logo" style="width:150px;height:150px;">
+   </h3>
 
 </body>
 </html>
