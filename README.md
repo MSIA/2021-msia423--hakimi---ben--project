@@ -81,64 +81,146 @@ In the training/testing phase of app development, correct classification rate wi
 
 ## Running the app
 
-### 1. Load data into S3
+### Create RDS Database and upload raw data to S3
 
-#### Set S3 Credential environmental variables
-
-Make sure the following AWS/S3 credentials have been loaded as environment variables:
+#### Make sure all S3 and RDS environment variables have been sorced 
 
 ```bash
 export AWS_ACCESS_KEY_ID="MY_ACCESS_KEY_ID"
 export AWS_SECRET_ACCESS_KEY="MY_SECRET_ACCESS_KEY"
-```
-
-#### Build Docker Image
-
-Run the following command in the command line to build the Docker Image:
-
-```bash
-docker build -f app/Dockerfile -t nflgames .
-```
-
-#### Download raw data and upload to S3
-
-To download the raw data using the previously built Docker Image, run the following in the command line:
-
-```bash
-docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY nflgames run.py loadData <S3_BUCKET_NAME> <PATH_IN_S3>
-```
-
-If no optional inputs are specified for the run.py function, the data will be pulled from the internet and placed in the local path `data/data.csv`. It will then be uploaded to the the S3 bucket `s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv`. To change the S3 bucket (the 2021-msia423-hakimi-ben part of the previous path), input the desired name of your S3 bucket in the first argument after `loadData`. To change the name of the file when uploaded to S3 (the rawCSVUpload/raw.csv part of the previous path), input the desired file path in the second argument after `loadData`.
-
-### 2. Initialize Database
-
-#### Source RDS/mysql variables
-
-Make sure the following RDS/mysql credentials have been loaded as environment variables:
-
-```bash
 export MYSQL_USER="MY_USERNAME"
 export MYSQL_PASSWORD="MY_PASSWORD"
 export MYSQL_HOST="MY_HOST"
 export MYSQL_PORT="MY_PORT"
 export MYSQL_DATABASE="MY_DATABASE"
 ```
-
-#### Create Database
-
-To create a database using the Docker Image, run the following in the command line:
+Either of the following commands will build the Docker Image for this first step
 
 ```bash
-docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABSE -e SQLALCHEMY_DATABASE_URI nflgames run.py createDB
+docker build -f app/Dockerfile_getData -t getdata_bjh6390 .
+```
+or
+```bash
+make dataimage
 ```
 
-To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` and use it as an import to the above docker command. If no `SQLALCHEMY_DATABASE_URI` or `MYSQL_DATABASE` are input, the default will be `sqlite:///data/msia423_db.db`.
+The next commands can be used to run the Docker commands which have just been built
 
-##### Local SQLite database
+```bash
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getdata_bjh6390 run.py createDB
+```
+and 
+```bash
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getdata_bjh6390 run.py loadData
+```
+or
+```bash
+make getdata
+```
 
-A local SQLite database can be created by not providing a `MYSQL_HOST` input and will create a database locally with the following engine string:
+These commands will download the raw data from the online source and push that raw data to the s3 bucket at `s3://2021-msia423-hakimi-ben/rawCSVUpload/raw.csv` as well as create a mysql by default at the location `sqlite:///data/msia423_db.db`.
 
-`engine_string = 'sqlite:///data/msia423_db.db'`
+To set your own locations for the database, source your `SQLALCHEMY_DATABASE_URI` before running the commands.
+
+### Cleaning the Data and creating a reproducable model
+
+#### Again, make sure the same environmental variables are sourced as the first section
+
+Either of the following commands will build the Docker Image for this step
+
+```bash
+docker build -f app/Dockerfile_getModel -t getmodel_bjh6390 .
+```
+or
+```bash
+make modelimage
+```
+The next commands can be used to run the Docker commands which have just been built
+
+```bash
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getmodel_bjh6390 run.py cleanData
+```
+and 
+```bash
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getmodel_bjh6390 run.py model
+```
+or
+```bash
+make getmodel
+```
+
+This step downloads the raw data locally from S3, cleans that data, and then builds a Random Forest Model to predict which team will cover the spread. Variables in the cleaning steps as well as model parameters can be changed using the config.yaml file found in the the config folder of this repository.
+
+The model built in this step will be used 
+
+### Building the web app
+
+For this section, please export your own `SQLALCHEMY_DATABASE_URI` engine string to connect to the RDS instance used in the app. If not, the output of the app will be saved to the `sqlite:///data/msia423_db.db` mysql database created in the first step.
 
 
- 
+Either of the following commands will build the Docker Image for this step
+
+```bash
+ocker build -f app/Dockerfile -t runapp_bjh6390 .
+```
+or
+```bash
+make appimage
+```
+The next commands can be used to run the Docker commands which have just been built
+
+```bash
+	docker run -e SQLALCHEMY_DATABASE_URI --mount type=bind,source=$(pwd),target=/app/ -p 5000:5000 runapp_bjh6390 app.py
+```
+or
+```bash
+make runapp
+```
+
+This step will create a web app which can be used to precict who will cover in a user selected matchup. After running this step, you can access the web app locally at the folowing web address: `http://localhost:5000/`.
+
+
+CONGRATS! You just created a web app!
+
+### Run Tests
+Make sure the Docker image for the `Cleaning the Data and creating a reproducable model` has been built before running these tests
+
+The next commands can be used to run unit tests for the data cleaning phase
+
+```bash
+docker run getmodel_bjh6390 -m pytest
+```
+or
+```bash
+make test
+```
+
+### Run entire pipeline at once
+
+This step is optional and can be used to run the entire pipeline from downloading the raw data from the source to creating the web app.
+(All Makefile commands) 
+
+First, we have to remove artifacts created in earlier steps using the following command:
+(This command can be run at any time to remove data and models created by the first two steps)
+
+```bash
+make clean
+```
+
+Next build all the docker images needed:
+```bash
+make allimages
+```
+
+Finally, run the entire pipeline:
+```bash
+make fullpipeline
+```
+
+
+
+
+
+
+
+
