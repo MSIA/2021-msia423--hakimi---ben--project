@@ -9,7 +9,7 @@
   * [Success criteria ](#success-criteria)
 - [Directory structure](#directory-structure)
 - [Running the app](#running-the-app)
-  * [Create RDS Database and upload raw data to S3](#step1)
+  * [Create RDS Database and upload raw data to S3](#create-RDS-database-and-upload-raw-data-to-S3)
   * [Cleaning the Data and creating a reproducable model](#step2)
   * [Building the web app](#step3)
   * [Run Tests](#run-tests)
