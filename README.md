@@ -148,7 +148,7 @@ For this section, please export your own `SQLALCHEMY_DATABASE_URI` engine string
 Either of the following commands will build the Docker Image for this step
 
 ```bash
-ocker build -f app/Dockerfile -t runapp_bjh6390 .
+docker build -f app/Dockerfile -t runapp_bjh6390 .
 ```
 or
 ```bash
@@ -157,7 +157,7 @@ make appimage
 The next commands can be used to run the Docker commands which have just been built
 
 ```bash
-	docker run -e SQLALCHEMY_DATABASE_URI --mount type=bind,source=$(pwd),target=/app/ -p 5000:5000 runapp_bjh6390 app.py
+docker run -e SQLALCHEMY_DATABASE_URI --mount type=bind,source=$(pwd),target=/app/ -p 5000:5000 runapp_bjh6390 app.py
 ```
 or
 ```bash
