@@ -9,18 +9,11 @@
   * [Success criteria ](#success-criteria)
 - [Directory structure](#directory-structure)
 - [Running the app](#running-the-app)
-  * [1. Initialize the database](#1-initialize-the-database)
-    + [Create the database with a single song](#create-the-database-with-a-single-song)
-    + [Adding additional songs](#adding-additional-songs)
-    + [Defining your engine string](#defining-your-engine-string)
-      - [Local SQLite database](#local-sqlite-database)
-  * [2. Configure Flask app](#2-configure-flask-app)
-  * [3. Run the Flask app](#3-run-the-flask-app)
-- [Running the app in Docker](#running-the-app-in-docker)
-  * [1. Build the image](#1-build-the-image)
-  * [2. Run the container](#2-run-the-container)
-  * [3. Kill the container](#3-kill-the-container)
-  * [Workaround for potential Docker problem for Windows.](#workaround-for-potential-docker-problem-for-windows)
+  * [Create RDS Database and upload raw data to S3](#step1)
+  * [Cleaning the Data and creating a reproducable model](#step2)
+  * [Building the web app](#step3)
+  * [Run Tests](#run-tests)
+  * [Run entire pipeline at once](#pipeline)
 
 <!-- tocstop -->
 
