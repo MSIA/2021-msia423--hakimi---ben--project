@@ -32,44 +32,38 @@ In the training/testing phase of app development, correct classification rate wi
 
 ```
 ├── README.md                         <- You are here
-├── api
+├── app
 │   ├── static/                       <- CSS, JS files that remain static
 │   ├── templates/                    <- HTML (or other code) that is templated and changes based on a set of inputs
-│   ├── boot.sh                       <- Start up script for launching app in Docker container.
 │   ├── Dockerfile                    <- Dockerfile for building image to run app  
+│   ├── Dockerfile_getData            <- Dockerfile for building image to get data from source  
+│   ├── Dockerfile_getModel           <- Dockerfile for building image to clean data and build model  
 │
 ├── config                            <- Directory for configuration files 
 │   ├── local/                        <- Directory for keeping environment variables and other local configurations that *do not sync** to Github 
 │   ├── logging/                      <- Configuration of python loggers
 │   ├── flaskconfig.py                <- Configurations for Flask API 
 │
-├── data                              <- Folder that contains data used or generated. Only the external/ and sample/ subdirectories are tracked by git. 
-│   ├── external/                     <- External data sources, usually reference data,  will be synced with git
-│   ├── sample/                       <- Sample data used for code development and testing, will be synced with git
+├── data                              <- Where raw data, and intermediate data sets will be stored in model pipeline
 │
 ├── deliverables/                     <- Any white papers, presentations, final work products that are presented or delivered to a stakeholder 
+│   ├── FinalPresentation.pptx        <- Power Point Slides used when presenting app
+│   ├── FinalPresentation.pdf         <- PDF version of slides
+|
 │
-├── docs/                             <- Sphinx documentation based on Python docstrings. Optional for this project. 
-│
-├── figures/                          <- Generated graphics and figures to be used in reporting, documentation, etc
-│
-├── models/                           <- Trained model objects (TMOs), model predictions, and/or model summaries
+├── models/                           <- Where model and accuracy metrics will be stored after running the app
 │
 ├── notebooks/
-│   ├── archive/                      <- Develop notebooks no longer being used.
-│   ├── deliver/                      <- Notebooks shared with others / in final state
 │   ├── develop/                      <- Current notebooks being used in development.
-│   ├── template.ipynb                <- Template notebook for analysis with useful imports, helper functions, and SQLAlchemy setup. 
-│
-├── reference/                        <- Any reference material relevant to the project
+|
 │
 ├── src/                              <- Source data for the project 
-│
 ├── test/                             <- Files necessary for running model tests (see documentation below) 
-│
+├── .gitignore                        <- Files to be left out of repository
+├── Makefile                          <- Used to make running Docker commands cleaner 
 ├── app.py                            <- Flask wrapper for running the model 
-├── run.py                            <- Simplifies the execution of one or more of the src scripts  
 ├── requirements.txt                  <- Python package dependencies 
+├── run.py                            <- Simplifies the execution of one or more of the src scripts  
 ```
 
 ## Running the app
