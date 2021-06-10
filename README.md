@@ -94,11 +94,11 @@ make dataimage
 The next commands can be used to run the Docker commands which have just been built
 
 ```bash
-docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getdata_bjh6390 run.py createDB
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source="$(pwd)",target=/app/ getdata_bjh6390 run.py createDB
 ```
 and 
 ```bash
-docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getdata_bjh6390 run.py loadData
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source="$(pwd)",target=/app/ getdata_bjh6390 run.py loadData
 ```
 or
 ```bash
@@ -125,11 +125,11 @@ make modelimage
 The next commands can be used to run the Docker commands which have just been built
 
 ```bash
-docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getmodel_bjh6390 run.py cleanData
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source="$(pwd)",target=/app/ getmodel_bjh6390 run.py cleanData
 ```
 and 
 ```bash
-docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source=$(pwd),target=/app/ getmodel_bjh6390 run.py model
+docker run -e MYSQL_HOST -e MYSQL_PORT -e MYSQL_USER -e MYSQL_PASSWORD -e MYSQL_DATABASE -e SQLALCHEMY_DATABASE_URI -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY --mount type=bind,source="$(pwd)",target=/app/ getmodel_bjh6390 run.py model
 ```
 or
 ```bash
@@ -157,7 +157,7 @@ make appimage
 The next commands can be used to run the Docker commands which have just been built
 
 ```bash
-docker run -e SQLALCHEMY_DATABASE_URI --mount type=bind,source=$(pwd),target=/app/ -p 5000:5000 runapp_bjh6390 app.py
+docker run -e SQLALCHEMY_DATABASE_URI --mount type=bind,source="$(pwd)",target=/app/ -p 5000:5000 runapp_bjh6390 app.py
 ```
 or
 ```bash
