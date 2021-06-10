@@ -2,6 +2,7 @@ import logging
 import logging.config
 
 import boto3  
+from boto3.exceptions import S3UploadFailedError
 
 
 ## Change level of following loggers to avoid over-use
@@ -38,6 +39,8 @@ def upload(bucket, s3path, fileName):
         logger.info("Data uploaded to S3 bucket w/ %s File Name= %s", bucket, s3path)
     except IsADirectoryError:
         logger.error("IsADirectoryError:  %s must be a file, not folder, to upload", fileName)
+    except S3UploadFailedError:
+        logger.warning('Was not able to upload the file to S3, file will only be saved locally')
     except FileNotFoundError:
         logger.error("FileNotFoundError: Local path = %s to upload data from cannot be found. Check filepath and try again.", fileName)
     except:
